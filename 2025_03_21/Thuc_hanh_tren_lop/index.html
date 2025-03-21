@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        Username: <input type="text" maxlength="100" placeholder="Username">
+        Password: <input type="password" maxlength="100" placeholder="Username">
+    </form>
+    --Textarea--
+    <form action="">
+        Introdution: <textarea cols="20" rows="4" placeholder="Introduce yourself"></textarea>
+    </form>
+    --Radio--
+    <input type="radio" name="ket_qua_1" value="a"/> Đáp án A  
+    <input type="radio" name="ket_qua" value="b" /> Đáp án B  
+    <input type="radio" name="ket_qua" value="c" /> Đáp án C 
+    <form action="">
+        --Checkbox--
+        Sở thích của bạn:   
+        <input type="checkbox" name="fav" value="nghe_nhac" /> Nghe nhạc  
+        <input type="checkbox" name="fav " value="xem_phim" /> Xem phim  
+        <input type="checkbox" name="fav " value="doc_sach" /> Chơi game  
+    </form>
+    <form action="">
+        --Dropdown List Box--
+        <select name="Tinh">
+            <option value="Nghe_An">Chọn tỉnh thành phố của bạn</option>
+            <option value="Nghe_An">Nghệ An</option>
+            <option value="Ha_Noi">Hà Nội</option>
+            <option value="Sai_Gon">Sài Gòn</option>
+        </select>
+    </form>
+
+    <form action="">
+        --Multiple Select Box--
+        Chọn nơi bạn đã từng sinh sống <br>  
+        <select name="thanh_pho" size="4" multiple="multiple">  
+            <option value="hanoi"> Hà Nội</option>  
+            <option value="hochiminh">TP Hồ Chí Minh</option>  
+            <option value="danang">Đà Nẵng</option>  
+            <option value="dalat">Đà Lạt</option>  
+            <option value="sapa">Sapa</option>  
+        </select> 
+    </form>
+    
+    <div>
+        --Sumbit Button--
+        <input type="submit" name="dangky" value="Đăng ký" /> 
+    </div>
+
+
+    <form class="sign-in">
+        Username: <input type="text" maxlength="100" placeholder="Username" required pattern="[A-Za-z\s]+" required>
+        Password: <input type="password" maxlength="100" placeholder="Username" required>
+        <div>
+            <input type="submit" name="dangky" value="Đăng nhập" /> 
+        </div>
+    </form>
+
+    <div>
+        <input type="date">
+    </div>
+</body>
+</html>

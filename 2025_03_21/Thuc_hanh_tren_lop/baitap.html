@@ -3,83 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Form</title>
+    <title>Document</title>
 </head>
 <body>
-    <table style="width: 600px; position: relative; left: 50%; transform: translateX(-50%);" cellspacing="18px">
-        <tr style="background-color: orange;" >
-            <th colspan="2">PT Ứng dụng Web - THIẾT KẾ FORM ĐƠN GIẢN</th>
-        </tr>
-
-        <tr align="left">
-            <th>Họ và tên</th>
-            <th>
-                <input type="text" name="name">
-            </th>
-        </tr>
-
-        <tr align="left">
-            <th>Email</th>
-            <th><input type="password" name="pass"></th>
-        </tr>
-
-        <tr align="left">
-            <th>Số điện thoại</th>
-            <th><input type="text" name="sdt"></th>
-        </tr>
-
-        <tr align="left">
-            <th>Quê quán</th>
-            <th>
-                <select name="" id="">
-                    <option value="">--Chọn thành phố---</option>
-                    <option value="NA">Nghệ An</option>
-                    <option value="HN">Hà Nội</option>
-                    <option value="HCM">Hồ Chí Minh</option>
-                    <option value="HD">Hải Dương</option>
-                    <option value="NB">Ninh Bình</option>
-                </select>
-            </th>
-        </tr>
-
-        <tr align="left">
-            <th>Giới tính</th>
-            <th>
-                <input type="radio" name="sex" id=""> Nam
-                <input type="radio" name="sex" id=""> Nữ
-            </th>
-        </tr>
-
-        <tr align="left">
-            <th>Kỹ năng</th>
-            <th>
-                <input type="checkbox" name="skill"> HTML
-                <input type="checkbox" name="skill"> CSS
-                <input type="checkbox" name="skill"> JS
-                <input type="checkbox" name="skill"> BOOTSTRAP
-            </th>
-        </tr>
-
-        <tr align="left">
-            <th>Ngày sinh</th>
-            <th>
-                <input type="date" name="birth">
-            </th>
-        </tr>
-
-        <tr align="left">
-            <th>Giới thiệu bản thân</th>
-            <th>
-                <textarea name="description" id=""></textarea>
-            </th>
-        </tr>
-
-        <tr style="background-color: orange;">
-            <th colspan="2">
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </th>
-        </tr>
-    </table>
+    <form>
+        <table cellspacing="15px">
+            <tr>
+                <th colspan="2" bgcolor="orange">PT Ứng dụng Web - THIẾT KẾ FORM ĐƠN GIẢN</th>
+            </tr>
+            <tr>
+                <th align="left">Họ và tên</th>
+                <th align="left">
+                    <input type="text" required>
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Email</th>
+                <th align="left">
+                    <input type="text" required>
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Số điện thoại</th>
+                <th align="left">
+                    <input type="text" required>
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Quê quán</th>
+                <th align="left">
+                    <select>
+                        <option value="">--Chọn thành phố---</option>
+                        <option value="">Hà Nội</option>
+                        <option value="">Nghệ An</option>
+                    </select>
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Giới tính</th>
+                <th align="left">
+                    <input type="radio" name="sex"> Nam
+                    <input type="radio" name="sex"> Nữ
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Kỹ năng</th>
+                <th align="left">
+                    <input type="checkbox" name="" id=""> HTML
+                    <input type="checkbox" name="" id=""> CSS
+                    <input type="checkbox" name="" id=""> JS
+                    <input type="checkbox" name="" id=""> BOOTSTRAP
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Ngày sinh</th>
+                <th align="left">
+                    <input type="date" required>
+                </th>
+            </tr>
+            <tr>
+                <th align="left">Giới thiệu bản thân</th>
+                <th align="left">
+                    <textarea name="" id=""></textarea>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2" bgcolor="orange">
+                    <input type="submit">
+                    <input type="reset">
+                </th>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>

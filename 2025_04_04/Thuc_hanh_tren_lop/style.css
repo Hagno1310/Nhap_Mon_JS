@@ -1,0 +1,38 @@
+.test {
+    width: auto;
+    height: auto;
+    background-color: aqua;
+}
+
+p {  
+    color: black;  
+    text-align: center; 
+    font-size: 80px; 
+} 
+
+#test-2 {
+    font-size: 30px;
+}
+
+#test-2 .p1 {
+    color: red;
+}
+#test-2 .p2{
+    color: blue;
+}
+#test-2 .text-1 ~ .p1{
+    font-size: 40px;
+}
+li {
+    font-size: 40px;
+}
+
+ul  .english {
+    color: black;
+}
+ul .vietnamese {
+    color: pink;
+}
+div + p {
+    background-color: aquamarine;
+}

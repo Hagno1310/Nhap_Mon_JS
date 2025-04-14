@@ -1,0 +1,99 @@
+body,html {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    padding: 10px;
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 -4px 14px rgba(88, 113, 143, 0.2) inset,
+        0 4px 14px rgba(88, 113, 143, 0.2) inset;
+}
+
+img {
+    width: 36px;
+}
+
+.left-ct {
+    width: 90%;
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.left-ct .option-1 {
+    display: flex;
+    gap: 6px;
+    margin-right: 40px;
+}
+
+.left-ct .option-2 {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.right-ct .sales {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-ct .sales .online {
+    display: flex;
+    align-items: center;
+    background-color: rgb(164, 164, 164);
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    gap: 2px;
+}
+
+.right-ct .sales .online img {
+    filter: grayscale(70%);
+    width: 24px;
+    height: 24px;
+}
+
+.right-ct .sales .online .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-ct .sales .online h6 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.right-ct .sales .online .text p {
+    font-size: 10px;
+}
+
+.option-1:hover,
+a:hover {
+    color: #3cc1ee;
+    text-decoration: underline;
+}
+.right-ct .sales .online:hover img,
+.right-ct .sales .online:hover .text h6,
+.right-ct .sales .online:hover .text p {
+    filter: grayscale(0%);
+    color: blue;
+}

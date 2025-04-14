@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.phone {
+  border: 1px solid gray;
+  width: 128px;
+  height: fit-content;
+  padding: 10px;
+}
+
+.phone:hover {
+  border-color: orange;
+}
+
+.phone:hover .name {
+  color: orange;
+}
+
+.phone:hover .price {
+  color: red;
+}

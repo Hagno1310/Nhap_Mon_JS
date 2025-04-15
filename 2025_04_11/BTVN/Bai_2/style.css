@@ -1,11 +1,18 @@
-body,html {
+body,
+html {
     display: flex;
     justify-content: center;
     margin: 0;
     padding: 0;
 }
 
-h1,h2,h3,h4,h5,h6,p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin: 0;
 }
 
@@ -53,6 +60,7 @@ img {
     width: 120px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .right-ct .sales .online {
@@ -86,11 +94,11 @@ img {
     font-size: 10px;
 }
 
-.option-1:hover,
 a:hover {
     color: #3cc1ee;
     text-decoration: underline;
 }
+
 .right-ct .sales .online:hover img,
 .right-ct .sales .online:hover .text h6,
 .right-ct .sales .online:hover .text p {

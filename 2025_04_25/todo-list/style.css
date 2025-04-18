@@ -8,8 +8,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    flex-direction: column;
 }
 
 ul,
@@ -22,6 +20,15 @@ li {
 .title img {
     width: 36px;
     height: 36px;
+}
+
+
+.todo-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
 }
 
 .container {
@@ -46,13 +53,14 @@ li {
     align-items: center;
     padding-left: 12px;
     transition: all 0.4s;
+    cursor: pointer;
 }
 
 .evening {
     background-color: rgb(217, 247, 246);
 }
 
-li:nth-child(odd) {
+label:nth-child(odd) li {
     background-color: rgb(255, 241, 207)
 }
 
@@ -69,16 +77,17 @@ li:nth-child(odd) {
 
 input[type="checkbox"] {
     transform: scale(1.2);
+    margin-right: 12px;
 }
 
 li:has(input[type="checkbox"]:checked) {
     background-color: rgb(145, 248, 139);
 }
 
-li:first-child {
+label:first-child li {
     border-top: 3px solid #bd6f29;
 }
 
-li:last-child {
+label:last-child li {
     border-bottom: 3px solid #bd6f29;
 }

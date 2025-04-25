@@ -1,0 +1,59 @@
+
+
+img {
+    position: relative;
+    top: 150px;
+    z-index: 1;
+}
+
+.box-1 {
+    width: 100px;
+    height: 100px;
+    background-color: rebeccapurple;
+    position: absolute;
+    top: 100px;
+}
+
+.box-2 {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+div.ex1 {
+    background-color: lightblue;
+    width: 110px;
+    height: 110px;
+    overflow: scroll;
+  }
+  
+  div.ex2 {
+    background-color: lightblue;
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+  }
+  
+  div.ex3 {
+    background-color: lightblue;
+    width: 110px;
+    height: 110px;
+    overflow: auto;
+  }
+  
+  div.ex4 {
+    background-color: lightblue;
+    width: 110px;
+    height: 110px;
+    overflow: clip;
+  }
+  
+  div.ex5 {
+    background-color: lightblue;
+    width: 110px;
+    height: 110px;
+    overflow: visible;
+  }

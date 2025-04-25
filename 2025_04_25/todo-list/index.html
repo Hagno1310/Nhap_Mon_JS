@@ -5,67 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Todo List</title>
 </head>
 
 <body>
-    <div class="todo-list">
-        <h1 class="title">
-            <img src="/icons/Hopstarter-Sleek-Xp-Basic-Document-Write.256.png">
-            <span>Danh sách công việc cần làm</span>
-        </h1>
-        <div class="container">
-            <div class="list">
-                <ul>
-                    <label>
-                        <li class="afternoon"><input type="checkbox" name="todo">Chạy bộ 5km</li>
-                    </label>
-                    <label>
-                        <li class="morning important"><input type="checkbox" name="todo">Vệ sinh cá nhân</li>
-                    </label>
-                    <label>
-                        <li class="morning"><input type="checkbox" name="todo">Ăn sáng</li>
-                    </label>
-                    <label>
-                        <li class=""><input type="checkbox" name="todo">Đi thực hành lập trình Script</li>
-                    </label>
-                    <label>
-                        <li class="morning important"><input type="checkbox" name="todo">Ăn trưa</li>
-                    </label>
-                    <label>
-                        <li class="evening"><input type="checkbox" name="todo">Học môn lập trình Script</li>
-                    </label>
-                    <label>
-                        <li class="evening important"><input type="checkbox" name="todo">Nộp bài lên git trước khi ngủ</li>
-                    </label>
-                    <label>
-                        <li class="evening"><input type="checkbox" name="todo">Chuẩn bị đồ đi học ngày mai</li>
-                    </label>
-                    <label>
-                        <li class="afternoon"><input type="checkbox" name="todo">Nhắn tin cho bạn gái</li>
-                    </label>
-                    <label>
-                        <li class="evening important"><input type="checkbox" name="todo">Gọi về cho gia đình</li>
-                    </label>
-                    <label>
-                        <li class="evening"><input type="checkbox" name="todo">Ăn tối</li>
-                    </label>
-                    <label>
-                        <li class="evening"><input type="checkbox" name="todo">Học môn Cơ sở dữ liệu</li>
-                    </label>
-                    <label>
-                        <li class="afternoon"><input type="checkbox" name="todo">Đi đá bóng</li>
-                    </label>
-                    <label>
-                        <li class="morning"><input type="checkbox" name="todo">Đọc một cuốn sách</li>
-                    </label>
-                </ul>
-            </div>
+    <div class="container">
+        <div class="title">
+            <h2>📝 Danh sách công việc hôm nay</h2>
         </div>
-        <div class="note" data-type="reminder">* Ghi nhớ: Kỷ luật là sức mạnh !</div>
+        <div class="content">
+            <ul>
+                <label>
+                    <li class="morning"><input type="checkbox" name="">Chạy bộ 5km</li>
+                </label>
+                <label>
+                    <li class="morning important"><input type="checkbox" name="">Vệ sinh cá nhân</li>
+                </label>
+                <label>
+                    <li class="morning"><input type="checkbox">Ăn sáng</li>
+                </label>
+                <label>
+                    <li class="afternoon"><input type="checkbox">Đi thực hành lập trình Script</li>
+                </label>
+                <label>
+                    <li class="morning important"><input type="checkbox">Ăn trưa</li>
+                </label>
+                <label>
+                    <li class="evening"><input type="checkbox">Học môn lập trình Script</li>
+                </label>
+                <label>
+                    <li class="morning"><input type="checkbox">Nộp bài lên git trước khi ngủ</li>
+                </label>
+                <label>
+                    <li class="evening"><input type="checkbox">Chuẩn bị đồ đi học ngày mai</li>
+                </label>
+                <label>
+                    <li class="morning"><input type="checkbox">Nhắn tin cho bạn gái</li>
+                </label>
+                <label>
+                    <li class="evening"><input type="checkbox">Ăn tối</li>
+                </label>
+                <label>
+                    <li class="morning"><input type="checkbox">Đi thực hành Cơ sở dữ liệu</li>
+                </label>
+                <label>
+                    <li class="evening important"><input type="checkbox">Gọi về cho gia đình</li>
+                </label>
+                <label>
+                    <li class="afternoon"><input type="checkbox">Đi đá bóng</li>
+                </label>
+                <label>
+                    <li class="evening"><input type="checkbox">Học môn Cơ sở dữ liệu</li>
+                </label>
+            </ul>
+        </div>
+        <p data-type="reminder"><i>Ghi nhớ: Kỷ luật là sức mạnh !</i></p>
     </div>
 </body>
 

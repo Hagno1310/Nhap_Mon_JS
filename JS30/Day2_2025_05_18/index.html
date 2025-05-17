@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <ol>
+            <li>Tính số Fibonacci</li>
+            <li>Đảo ngược một chuỗi</li>
+            <li>Kiểm tra năm nhuận</li>
+            <li>Kiểm tra mật khẩu mạnh</li>
+        </ol>
+
+        <form id="myForm">
+            <input type="text" id="myInput" placeholder="Chọn bài toán">
+            <button type="submit">Gửi</button>
+        </form>
+
+        <h3>Kết quả</h3>
+        <h3 id="output"></h3>
+            
+    </div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const inputValue = document.getElementById("myInput").value;
+            switch (inputValue) {
+                case '1':
+                    fibonacci()
+                    break;
+                case '2':
+                    daoNguocChuoi()
+                    break;
+                case '3':
+                    laNamNhuan()
+                    break;
+                case '4':
+                    kiemTraMatKhau()
+                    break;
+                default:
+                    alert("Dữ liệu không hợp lệ")
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+
+
+</body>
+</html>

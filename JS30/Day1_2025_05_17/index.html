@@ -18,17 +18,18 @@
             <li>Chuyển đổi điểm số</li>
             <li>Tính tổng chữ số</li>
         </ol>
-        <h3>Kết quả</h3>
+        
         <form id="myForm">
             <input type="text" id="myInput" style="height: 30px;">
             <button type="submit" style="height: 30px; width: 60px;">Gửi</button>
         </form>
 
-        <p id="output"></p>
+        <h3>Kết quả:</h3>
+        <h3 id="output"></h3>
     </div>
     <script>
         document.getElementById("myForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Ngăn form reload trang
+            event.preventDefault();
             const inputValue = document.getElementById("myInput").value;
             switch (inputValue) {
                 case '1':
@@ -59,7 +60,7 @@
                     tongChuSo()
                     break
                 default:
-                    document.write("Lựa chọn không hợp lệ")
+                    alert("Lựa chọn không hợp lệ")
             }
         });
     </script>

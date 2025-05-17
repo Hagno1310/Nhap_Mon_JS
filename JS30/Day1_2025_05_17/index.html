@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <ol>
+            <li>Kiểm tra số chẵn lẻ</li>
+            <li>Tính giai thừa</li>
+            <li>Đếm số chia hết cho 3 và 5 trong khoảng 1-100</li>
+            <li>Tính tổng các số lẻ nhỏ hơn n</li>
+            <li>Hiện thị bảng cửu chương</li>
+            <li>Kiếm tra số nguyên tố</li>
+            <li>Vẽ tam giác sao</li>
+            <li>Chuyển đổi điểm số</li>
+            <li>Tính tổng chữ số</li>
+        </ol>
+        <h3>Kết quả</h3>
+        <form id="myForm">
+            <input type="text" id="myInput" style="height: 30px;">
+            <button type="submit" style="height: 30px; width: 60px;">Gửi</button>
+        </form>
+
+        <p id="output"></p>
+    </div>
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn form reload trang
+            const inputValue = document.getElementById("myInput").value;
+            switch (inputValue) {
+                case '1':
+                    kiemTraChanLe()
+                    break
+                case '2':
+                    tinhGiaiThua()
+                    break
+                case '3':
+                    demSoChiaHet()
+                    break
+                case '4':
+                    tongSoLe()
+                    break
+                case '5':
+                    bangCuuChuong()
+                    break
+                case '6':
+                    laSoNguyenTo()
+                    break
+                case '7':
+                    veTamGiac()
+                    break
+                case '8':
+                    xepLoai()
+                    break
+                case '9':
+                    tongChuSo()
+                    break
+                default:
+                    document.write("Lựa chọn không hợp lệ")
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

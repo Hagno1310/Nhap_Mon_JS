@@ -237,8 +237,8 @@ button {
             transition-timing-function:ease-in-out;
     -webkit-transition-duration:1.2s;
             transition-duration:1.2s; 
-    -webkit-transform:translate3d(720px, 0, 0);
-            transform:translate3d(720px, 0, 0);
+    -webkit-transform:translate3d(-640px, 0, 0);
+            transform:translate3d(-640px, 0, 0);
 }
 
 .img-btn {

@@ -45,6 +45,10 @@ header {
     gap: 10px;
 }
 
+.options ul li:hover {
+    text-decoration: underline;
+}
+
 .social-media li{
     display: grid;
     place-items: center;
@@ -179,9 +183,13 @@ nav {
     align-items: center;
     justify-content: center;
     width: 634px;
+    height: 433px;
     border: 1px solid #fff;
-    background-color: #3cf;
     text-align: center;
+    background-position: center;
+    background-size: 280%;
+    background-repeat: no-repeat;
+    transition: all 0.2s ease;
 }
 
 .img-content {
@@ -247,5 +255,5 @@ nav {
 }
 
 .slide:hover {
-    background-size: 120px;
+    background-size: 300%;
 }

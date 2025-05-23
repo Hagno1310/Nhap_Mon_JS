@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fffde7;
+    display: grid;
+    place-items: center;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.title {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.items {
+    margin: 25px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+}
+
+.item {
+    display: grid;
+    place-items: center;
+    width: 138px;
+    height: 138px;
+    border: 3px solid #ccc;
+}
+
+.pics {
+    width: 110px;
+    height: 110px;
+}
+
+.grape {
+    background-image: url(/images/grape.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.strawberry {
+    background-image: url(/images/strawberry.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.orange {
+    background-image: url(/images/orange.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.answer-title {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.answer-items {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}

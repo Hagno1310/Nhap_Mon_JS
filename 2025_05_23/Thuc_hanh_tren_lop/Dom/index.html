@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Test Page</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="main-title">DOM Test Page</h1>
+
+    <div class="container" id="container-1">
+        <h2 class="section-title">Section 1</h2>
+        <p class="text">This is the first paragraph in section 1.</p>
+        <p class="text">This is the second paragraph in section 1.</p>
+        <button class="btn" id="btn-1">Button 1</button>
+    </div>
+
+    <div class="container" id="container-2" onclick="sayHello()">
+        <h2 class="section-title">Section 2</h2>
+        <p class="text">This is the first paragraph in section 2.</p>
+        <p class="text">This is the second paragraph in section 2.</p>
+        <button class="btn" id="btn-2">Button 2</button>
+    </div>
+
+    <div class="footer" id="footer">
+        <p class="footer-text">Footer content here.</p>
+    </div>
+
+    <script>
+        document.getElementById('main-title').innerText = 'Hello'
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Caculator</title>
+</head>
+<body>
+    <div class="container">
+        <div class="caculator">
+            <input type="text" id="screen"></input>
+            <div class="buttons">
+                <div class="button" onclick="showScreen('1')">1</div>
+                <div class="button" onclick="showScreen('2')">2</div>
+                <div class="button" onclick="showScreen('3')">3</div>
+                <div class="button math" onclick="showScreen('+')">+</div>
+                <div class="button" onclick="showScreen('4')">4</div>
+                <div class="button" onclick="showScreen('5')">5</div>
+                <div class="button" onclick="showScreen('6')">6</div>
+                <div class="button math" onclick="showScreen('-')">-</div>
+                <div class="button" onclick="showScreen('7')">7</div>
+                <div class="button" onclick="showScreen('8')">8</div>
+                <div class="button" onclick="showScreen('9')">9</div>
+                <div class="button math" onclick="showScreen('*')">x</div>
+                <div class="button math" onclick="clearScreen()">C</div>
+                <div class="button math" onclick="showScreen('0')">0</div>
+                <div class="button math" onclick="calculate()">=</div>
+                <div class="button math" onclick="showScreen('/')">/</div>
+            </div>
+        </div>
+    </div>
+<script src="main.js"></script>
+</body>
+</html>

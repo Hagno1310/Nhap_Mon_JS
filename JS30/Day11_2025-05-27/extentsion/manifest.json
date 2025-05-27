@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "My Web Page Extension",
+  "version": "1.0",
+  "description": "Run on a specific webpage",
+  "permissions": ["scripting"],
+  "host_permissions": ["https://dantri.com.vn/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://dantri.com.vn/"],
+      "js": ["content.js"]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+        }
+
+        .title {
+            margin: 0;
+            padding: 0;
+        }
+
+        input {
+            padding: 0 10px;
+            border: 1px solid #000;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            width: 200px;
+            height: 30px;
+        }
+
+        .btn {
+            padding: 4px 8px;
+            display: grid;
+            place-items: center;
+            height: 30px;
+            width: 100px;
+            font-size: 16px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            transition: all 0.4s;
+        }
+        
+        .btn:active {
+            box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+            border: 1px solid rgb(7, 190, 7);
+            background-color: rgb(7, 190, 7);
+            color: #fff;
+        }   
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title-input {
+            font-size: 16px;
+            padding-left: 4px;
+            margin-bottom: 4px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="title" style="text-align: center; margin-bottom: 10px; font-size: 18px;">PopUp</h1>
+        <div class="box">
+            <p class="title-input">Title:</p>
+            <input type="text" id="changeTitle" class="changeTitle" placeholder="Property">
+            <p class="title-input">Index:</p>
+            <input type="number" id="index" class="index" placeholder="Property">
+        </div>
+        <div class="btn" id="btn">Change</div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

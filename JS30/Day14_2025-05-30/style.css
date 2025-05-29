@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-weight: 500;
+    width: 100%;
+    height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.box {
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    width: 40%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+label p {
+    font-size: 18px;
+}
+
+.box input {
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 0 8px;
+    border: 2px solid #f2f2f2;
+    height: 44px;
+    width: 100%;
+}
+
+#btn {
+    font-weight: 400;
+    margin-top: 10px;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    width: 100px;
+    height: 46px;
+    color: #fff;
+    background-color: #27a844;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+#btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#btn:active {
+    transition: all 0.2s;
+    background-color: #1f8836;
+}
+
+table {
+    background-color: rgb(225, 225, 225);
+    width: 100%;
+}
+
+
+td, th {
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    height: 36px;
+    background-color: #f1f1f0;
+    width: calc(100%/5);
+}
+
+td {
+    background-color: #fff;
+}
+
+.action {
+    height: 60px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.change {
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 400;
+    width: 80px;
+    border-radius: 4px;
+    padding: 10px 8px;
+    background-color: #007cff;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.change:active {
+    background-color: #0066d4;
+}

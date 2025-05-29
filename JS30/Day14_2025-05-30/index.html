@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>JS30 Day 13</title>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Thêm sinh viên vào danh sách</div>
+        <div class="box">
+            <label>
+                <p class="titleInput">Mã sinh viên:</p>
+                <input type="text" id="msv">
+            </label>
+            <label>
+                <p class="titleInput">Họ tên:</p>
+                <input type="text" id="name">
+            </label>
+            <label>
+                <p class="titleInput">Email:</p>
+                <input type="text" id="email">
+            </label>
+            <label>
+                <p class="titleInput">Số điện thoại:</p>
+                <input type="text" id="phone">
+            </label>
+
+            <div id="btn">Thêm</div>
+        </div>
+    </div>
+
+    <table id="list">
+        <thead>
+            <tr>
+                <th>Mã SV</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="studentList">
+            
+        </tbody>
+    </table>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

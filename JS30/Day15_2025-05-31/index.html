@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="Bai1">
+        <script>
+            console.log('Bài 1')
+            class Student{
+                constructor(id, name, email, age) {
+                    this.id = id;
+                    this.name = name;
+                    this.email = email;
+                    this.age = age;
+                }
+
+                displayInfo() {
+                    return {'ID': this.id, 'Name': this.name, 'Email': this.email, 'Age': this.age}
+                }
+            }
+
+            var std1 = new Student('HS01', 'A','abc@gmail.com', 18);
+            var std2= new Student('HS02', 'A','def@gmail.com', 19);
+            
+            console.log(std1.displayInfo())
+            console.log(std2.displayInfo())
+        </script>
+    </div>
+
+    <div class="Bai2">
+        <script>
+            console.log('Bài 2')
+            class Employee{
+                constructor(name, position, baseSalary, workingDays) {
+                    this.name = name;
+                    this.position = position;
+                    this.baseSalary = baseSalary;
+                    this.workingDays = workingDays;
+                }
+
+                calculateSalary() {
+                    return this.baseSalary * this.workingDays
+                }
+
+                show() {
+                    return {'Name': this.name, 'Position': this.position, 'BaseSalary': this.baseSalary, 'WorkingDays': this.workingDays, 'Salary': this.calculateSalary()}
+                }
+            }
+
+            var employee1 = new Employee("Nguyen Van A", "Developer", 500000, 22);
+
+            console.log(employee1.show());
+        </script>
+    </div>
+    
+    <div class="Bai3">
+        <script>
+            console.log('Bài 3');
+            class Product{
+                constructor(id, name, price, quantity) {
+                    this.id = id;
+                    this.name = name;
+                    this.price = price;
+                    this.quantity = quantity;
+                }
+
+                show() {
+                    return {'ID': this.id, 'Name': this.name, 'Price': this.price, 'Quantity': this.quantity}
+                }
+            }
+            
+            var product = [];
+
+            function addProduct(id, name, price, quantity) {
+                var a = new Product(id, name, price, quantity);
+                product.push(a);
+            }
+
+            function calculatePrice() {
+                var ans = 0;
+                for (var i = 0; i < product.length; i++) {
+                    ans += product[i].price * product[i].price;
+                }
+                return ans;
+            }
+
+            function highestPrice() {
+                var max = -1;
+                var currentIndex = 0;
+                for (var i = 0; i < product.length; i++) {
+                    if (product[i].price >= max) {
+                        max = product[i].price;
+                        currentIndex = i;
+                    }
+                }
+
+                console.log(product[currentIndex].show())
+            }
+
+            addProduct(1, "Laptop", 1500, 2);
+            addProduct(2, "Phone", 800, 5);
+            addProduct(3, "Tablet", 1200, 3);
+
+            console.log("Tổng tiền tất cả sản phẩm:", calculatePrice());
+            highestPrice();
+        </script>
+    </div>
+</body>
+</html>

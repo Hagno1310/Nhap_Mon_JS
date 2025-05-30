@@ -1,5 +1,10 @@
 var editingRow = null;
 
+function saveData() {
+    var data = document.getElementById('studentList')
+    localStorage.setItem(JSON.stringify)
+}
+
 document.getElementById('btn').addEventListener('click', function() {
     const msv = document.getElementById('msv').value
     const name = document.getElementById('name').value

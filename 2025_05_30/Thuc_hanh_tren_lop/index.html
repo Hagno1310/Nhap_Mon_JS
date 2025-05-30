@@ -21,6 +21,10 @@
             id;
             name;
             class;
+            constructor() {  
+                document.write("Đối tượng đã tạo thành công <br>");
+            }  
+
             sayHello() {
                 document.write(`Hello, ${this.name}<br>`)
             }
@@ -36,6 +40,7 @@
         a.class = 'D24CQCC06-B';
         a.sayHello();
         a.myClass();
+        a.constructor()
 
         Student.prototype.score = 9.9;
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function student(id, name, salary) {
+            this.id = id;
+            this.name = name;
+            this.salary = salary;
+        }
+        nam = new student("b24dccc126","Hoàng",400000);
+        document.writeln(`${nam.id} ${nam.name} ${nam.salary} <br>`);
+    </script>
+
+    <script>
+        class Student{
+            id;
+            name;
+            class;
+            sayHello() {
+                document.write(`Hello, ${this.name}<br>`)
+            }
+
+            myClass() {
+                document.write(`My class is ${this.class}<br>`)
+            }
+        }
+
+        a = new Student();
+        a.name = 'Nguyễn Huy Hoàng';
+        a.id = 'B24DCCC126';
+        a.class = 'D24CQCC06-B';
+        a.sayHello();
+        a.myClass();
+
+        Student.prototype.score = 9.9;
+
+        alert(a.score)
+    </script>
+</body>
+</html>

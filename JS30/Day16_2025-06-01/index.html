@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý sản phẩm</h1>
+        <div class="input-box">
+            <input type="text" id="id" placeholder="Nhập vào mã sản phẩm">
+            <input type="text" id="name" placeholder="Nhập vào tên sản phẩm">
+            <input type="text" id="price" placeholder="Nhập vào giá sản phẩm">
+            <input type="text" id="quantity" placeholder="Nhập vào số lượng sản phẩm">
+        </div>
+        <div class="btn-add" id="btn-add">Thêm</div>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng giá trị</th>
+                    <th class="last">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div id="info">
+            <p>Tổng giá trị tồn kho: <span id="total">0</span> VNĐ</p>
+            <p>Sản phẩm đắt nhất: <span>Không có gì</span> (<span>0</span> VNĐ)</p>
+        </div>
+    </div>
+<script src="/script.js"></script>
+</body>
+</html>

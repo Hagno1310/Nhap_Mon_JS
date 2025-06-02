@@ -14,9 +14,9 @@ class Product {
         return `
             <td>${this.id}</td>
             <td>${this.name}</td>
-            <td>${this.price}</td>
+            <td>${this.price} VNĐ</td>
             <td>${this.quantity}</td>
-            <td>${this.getTotalPrice()}</td>
+            <td>${this.getTotalPrice()} VNĐ</td>
             <td class="action last">
                 <div class="change btn-action">Sửa</div>
                 <div class="delete btn-action">Xóa</div>

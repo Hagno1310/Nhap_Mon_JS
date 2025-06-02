@@ -17,9 +17,11 @@ class Product {
             <td>${this.price} VNĐ</td>
             <td>${this.quantity}</td>
             <td>${this.getTotalPrice()} VNĐ</td>
-            <td class="action last">
-                <div class="change btn-action">Sửa</div>
-                <div class="delete btn-action">Xóa</div>
+            <td class="action">
+                <div class="btn-container">
+                    <div class="change btn-action">Sửa</div>
+                    <div class="delete btn-action">Xóa</div>
+                </div>
             </td>
         `;
     }

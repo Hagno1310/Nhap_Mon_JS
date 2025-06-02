@@ -85,11 +85,14 @@ document.getElementById("btn-add").addEventListener('click', function () {
             row.remove();
             updateTotal()
             updateHighest();
+
+            editingRow = null;
             document.getElementById('btn-add').textContent = "Thêm";
             resetForm();
         });
     }
 
+    updateTotal()
     updateHighest();
     resetForm();
 

@@ -61,6 +61,8 @@ document.getElementById("btn-add").addEventListener('click', function () {
         row.innerHTML = product.toRowHTML();
         tbody.appendChild(row);
         products.push(product);
+        updateTotal();
+        updateHighest();
 
         row.querySelector('.change').addEventListener('click', function () {
             const cells = row.getElementsByTagName('td');
@@ -70,6 +72,8 @@ document.getElementById("btn-add").addEventListener('click', function () {
             document.getElementById('quantity').value = cells[3].textContent;
 
             editingRow = row;
+            updateTotal()
+            updateHighest();
             document.getElementById('btn-add').textContent = "Lưu";
         });
 
@@ -77,11 +81,14 @@ document.getElementById("btn-add").addEventListener('click', function () {
             const idToDelete = row.getElementsByTagName('td')[0].textContent;
             products = products.filter(p => p.id !== idToDelete);
             row.remove();
+            updateTotal()
+            updateHighest();
             document.getElementById('btn-add').textContent = "Thêm";
             resetForm();
         });
     }
 
+    updateHighest();
     resetForm();
 
     function resetForm() {
@@ -90,17 +97,25 @@ document.getElementById("btn-add").addEventListener('click', function () {
         document.getElementById('price').value = "";
         document.getElementById('quantity').value = "";
     }
+
 });
 
 function calculatePrice() {
     return products.reduce((sum, p) => sum + p.getTotalPrice(), 0);
 }
 
-document.getElementById('total').textContent = calculatePrice();
-
-function highestPrice() {
-    if (products.length === 0) return null;
-    let max = products.reduce((prev, curr) => curr.price > prev.price ? curr : prev);
-    console.log("Sản phẩm giá cao nhất:", max);
+function updateTotal() {
+    document.getElementById('total').textContent = calculatePrice();
 }
 
+
+function highestPrice() {
+    if (products.length === 0) return {'name': 'Không có gì', 'price': 0};
+    let max = products.reduce((prev, curr) => curr.price > prev.price ? curr : prev);
+    return max;
+}
+
+function updateHighest() {
+    document.getElementById('highest_price').textContent = highestPrice().price;
+    document.getElementById('item').textContent = highestPrice().name;
+}

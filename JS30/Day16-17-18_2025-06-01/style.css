@@ -121,3 +121,21 @@ tbody td:nth-child(6),
     background-color: rgb(220, 53, 69);
     color: #fff;
 }
+
+#search {
+    margin-bottom: 20px;
+}
+
+.search-btn {
+    border: 1px solid #000;
+    width: 80px;
+    display: grid;
+    place-items: center;
+    background-color: #d9d9d9;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+}
+
+.search-btn:active {
+    background-color: #b9b9b9;
+}

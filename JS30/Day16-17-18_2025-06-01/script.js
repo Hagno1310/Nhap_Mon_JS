@@ -102,7 +102,6 @@ document.getElementById("btn-add").addEventListener('click', function () {
         document.getElementById('price').value = "";
         document.getElementById('quantity').value = "";
     }
-
 });
 
 function calculatePrice() {
@@ -124,3 +123,36 @@ function updateHighest() {
     document.getElementById('highest_price').textContent = highestPrice().price;
     document.getElementById('item').textContent = highestPrice().name;
 }
+
+document.getElementById('search-btn').addEventListener('click', function () {
+    const id = document.getElementById('search').value.trim();
+    const tbody = document.getElementById('list').getElementsByTagName('tbody')[0];
+
+    clearTable();
+
+    if (id === "") {
+        
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = product.toRowHTML();
+            tbody.appendChild(row);
+        });
+    } else {
+        const found = products.find(p => p.id === id);
+
+        if (found) {
+            const row = document.createElement('tr');
+            row.innerHTML = found.toRowHTML();
+            tbody.appendChild(row);
+        } else {
+            alert("Không tìm thấy sản phẩm có ID: " + id);
+        }
+    }
+
+    updateTotal();
+    updateHighest();
+
+    function clearTable() {
+        tbody.innerHTML = "";
+    }
+});

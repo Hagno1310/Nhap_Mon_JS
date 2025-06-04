@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding-bottom: 94px;
+    max-width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-image: url(/frontend/images/bg.png.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    padding: 18px 32px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-btn {
+    padding: 15px 26px;
+    width: 100px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #1DE782;
+    font-size: 18px;
+    line-height: 100%;
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+    background-color: #17C769;
+}
+
+.regis-btn {
+    padding: 15px 10px;
+    width: 100px;
+    height: 48px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 100%;
+    color: #fff;
+    text-transform: capitalize;
+    text-align: center;
+    cursor: pointer;
+}
+
+.list-film {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+}
+
+.title {
+    width: 318px;
+    height: 46px;
+    line-height: 100%;
+    text-transform: capitalize;
+    color: #fff;
+    font-size: 46px;
+    font-weight: 700;
+    margin: 52px 0 62px;
+}
+
+.films-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.films-menu .item {
+    width: 250px;
+    height: 408px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    cursor: pointer;
+    transition: scale 0.2s;
+}
+
+.film-name {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.films-menu .item:hover {
+    scale: 1.05;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+}
+
+.my-ticket {
+    color: #fff;
+}
+
+.logout-btn {
+    padding: 15px 10px;
+    width: 100px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #DC0000;
+    font-size: 18px;
+    line-height: 100%;
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #ba0000;
+}

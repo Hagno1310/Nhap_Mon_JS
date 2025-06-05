@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../style/myticket.css">
+    <title>Movie Ticket Booking</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container"><a href="./home2.html"><img src="/frontend/images/logo.png" alt=""></a></div>
+            <div class="nav-container">
+                <a href="/frontend/templates/myticket.html" class="my-ticket">My Ticket</a>
+                <a href="/frontend/templates/home.html" class="logout-btn">Logout</a>
+            </div>
+        </header>
+
+        <div class="list-btn">
+            <div class="btn active" id="upcoming">Upcoming</div>
+            <div class="btn" id="history">History</div>
+        </div>
+
+        <div class="upcoming list" id="upcoming-list">
+            <div class="item">
+                <div class="date">
+                    <div class="text">Date</div>
+                    <p>Mon, 23 Oct 2023</p>
+                </div>
+                <div class="title">
+                    <div class="text">Movie Title</div>
+                    <p>SPIDERMAN NO WAY HOME</p>
+                </div>
+                <div class="ticket-time">
+                    <div class="ticket">
+                        <div class="text">Ticket (<span>3</span>)</div>
+                        <p>C8, C9, C10</p>
+                    </div>
+                    <div class="time">
+                        <div class="text">Hours</div>
+                        <p>14:40</p>
+                    </div>
+                </div>
+                <div class="download">Download Ticket</div>
+            </div>
+        </div>
+        <div class="history list" id="history-list" style="display: none;">
+            <div class="item">
+                <div class="date">
+                    <div class="text">Date</div>
+                    <p>Mon, 23 Oct 2023</p>
+                </div>
+                <div class="title">
+                    <div class="text">Movie Title</div>
+                    <p>SPIDERMAN NO WAY HOME</p>
+                </div>
+                <div class="ticket-time">
+                    <div class="ticket">
+                        <div class="text">Ticket (<span>3</span>)</div>
+                        <p>C8, C9, C10</p>
+                    </div>
+                    <div class="time">
+                        <div class="text">Hours</div>
+                        <p>14:50</p>
+                    </div>
+                </div>
+                <div class="download">Download Ticket</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('upcoming').addEventListener('click', function() {
+        document.getElementById('upcoming').classList.add('active')
+        document.getElementById('history').classList.remove('active')
+
+        document.getElementById('upcoming-list').style.display = 'flex';
+        document.getElementById('history-list').style.display = 'none';
+
+    })
+
+    document.getElementById('history').addEventListener('click', function() {
+        document.getElementById('history').classList.add('active')
+        document.getElementById('upcoming').classList.remove('active')
+
+        document.getElementById('history-list').style.display = 'flex';
+        document.getElementById('upcoming-list').style.display = 'none';
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding-bottom: 94px;
+    max-width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-image: url(/frontend/images/bg.png.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+}
+
+header {
+    padding: 18px 32px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logout-btn {
+    padding: 15px 10px;
+    width: 100px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #DC0000;
+    font-size: 18px;
+    line-height: 100%;
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.movie {
+    color: #fff;
+    padding: 40px 160px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 36px;
+    margin-bottom: 36px;
+}
+
+.theater .address {
+    display: flex;
+    gap: 16px;
+}
+
+.theater li {
+    list-style: none;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 40px;
+    padding: 10px 15px;
+}
+
+.date .date-list {
+    width: 610px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.date-list li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 15px 20px;
+}
+
+.date-list li .day {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.time .time-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.time-list li {
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: 1px solid #fff; 
+}
+
+li {
+    cursor: pointer;
+}
+
+li:hover {
+    border-color: #1DE782;
+}
+
+.active {
+    background-color: #1DE782;
+    border-color: #1DE782;
+}

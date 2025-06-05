@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,300;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../style/info.css">
+    <title>Movie Ticket Booking</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container"><img src="/frontend/images/logo.png" alt=""></div>
+            <a href="/frontend/templates/home.html" class="logout-btn">Logout</a>
+        </header>
+
+        <div class="movie">
+            <div class="info">
+                <div class="theater" id="theater">
+                    <div class="title">Theater</div>
+                    <ul class="address">
+                        <li><i class="fa-solid fa-location-dot"></i>Bukit Bintang</li>
+                        <li><i class="fa-solid fa-location-dot"></i>Putrajaye</li>
+                        <li><i class="fa-solid fa-location-dot"></i>KB Mall</li>
+                    </ul>
+                </div>
+                <div class="date" id="date">
+                    <div class="title">Date</div>
+                    <div class="date-list">
+                        <li>
+                            <p>22 Oct</p>
+                            <p class="day">Mon</p>
+                        </li>
+                        <li>
+                            <p>23 Oct</p>
+                            <p class="day">Tues</p>
+                        </li>
+                        <li>
+                            <p>24 Oct</p>
+                            <p class="day">Wed</p>
+                        </li>
+                        <li>
+                            <p>25 Oct</p>
+                            <p class="day">Thurs</p>
+                        </li>
+                        <li>
+                            <p>26 Oct</p>
+                            <p class="day">Fri</p>
+                        </li>
+                    </div>
+                </div>
+                <div class="time" id="time">
+                    <div class="title">Time</div>
+                    <div class="time-list">
+                        <li>15:40</li>
+                        <li>16:10</li>
+                        <li>16:40</li>
+                        <li>17:10</li>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-film"></div>
+        </div>
+    </div>
+<script>
+    document.getElementById('theater').querySelectorAll('li').forEach(item => {
+        item.addEventListener('click', function() {
+
+            document.getElementById('theater').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
+
+            this.classList.toggle('active')
+        })
+    })
+
+    document.getElementById('date').querySelectorAll('li').forEach(item => {
+        item.addEventListener('click', function() {
+
+            document.getElementById('date').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
+
+            this.classList.toggle('active')
+        })
+    })
+
+    document.getElementById('time').querySelectorAll('li').forEach(item => {
+        item.addEventListener('click', function() {
+
+            document.getElementById('time').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
+
+            this.classList.toggle('active')
+        })
+    })
+</script>
+</body>
+</html>

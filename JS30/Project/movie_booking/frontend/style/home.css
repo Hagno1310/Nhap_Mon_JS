@@ -13,6 +13,10 @@ body {
     background-repeat: no-repeat;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 a {
     text-decoration: none;
 }
@@ -86,7 +90,9 @@ header {
 }
 
 .films-menu {
+    width: 1200px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 50px;
@@ -122,8 +128,30 @@ header {
 }
 
 .my-ticket {
+    position: relative;
     color: #fff;
 }
+
+@keyframes RunLeft {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.my-ticket:hover::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: -16px;
+    left: 0;
+    height: 4px;
+    background-color: #1de782;
+    animation: RunLeft 0.5s;
+}
+
 
 .logout-btn {
     padding: 15px 10px;

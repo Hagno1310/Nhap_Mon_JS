@@ -65,6 +65,9 @@ input {
     height: 48px;
     border-radius: 8px;
     border: 1.2px solid #BEBEBF;
+}
+
+input::placeholder {
     color: #BEBEBF;
 }
 

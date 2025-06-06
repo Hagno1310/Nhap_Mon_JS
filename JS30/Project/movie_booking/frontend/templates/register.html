@@ -21,20 +21,67 @@
             <form>
                 <label for="">
                     <div class="input-text">Email</div>
-                    <input type="email" placeholder="Enter your email">
+                    <input type="email" placeholder="Enter your email" id="email">
                 </label>
                 <label for="" class="confirm">
                     <div class="input-text">Password</div>
-                    <input type="password" placeholder="Enter your password">
-                    <input type="password" placeholder="Confirm your password">
+                    <input type="password" placeholder="Enter your password" id="password">
+                    <input type="password" placeholder="Confirm your password" id="checkagain">
+                    <p id="wrong-password" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Mật khẩu đã nhập không khớp. Vui lòng thử lại</p>
+                    <p id="fill-input" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Vui lòng nhập đầy đủ thông tin</p>
+                    <p id="already-exist" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Email này đã được đăng ký. Vui lòng dùng email khác.</p>
                 </label>
 
-                <a href="home2.html" class="login-btn">Create Account</a>
+                <div class="login-btn" id="login-btn">Create Account</div>
                 <p class="regis">Already Have An Account ? <span><a class="log-link" href="login.html">Log In</a></span></p>
 
                 </div>
             </form>
         </div>
     </div>
+<script>
+    document.getElementById('login-btn').addEventListener('click', function() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const check = document.getElementById('checkagain').value.trim();
+
+        if (email == "" || password == "" || check == "") {
+            document.getElementById('fill-input').style.display = 'flex';
+            setTimeout(function() {
+                document.getElementById('fill-input').style.display = 'none';
+            }, 2000)
+            return
+        } 
+        if (password != check) {
+            document.getElementById('wrong-password').style.display = 'flex';
+            setTimeout(function() {
+                document.getElementById('wrong-password').style.display = 'none';
+            }, 2000)
+            return
+        } 
+
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith("account_")) {
+                const account = JSON.parse(localStorage.getItem(key));
+                if (account.email === email) {
+                    document.getElementById('already-exist').style.display = 'flex';
+                    setTimeout(function() {
+                        document.getElementById('already-exist').style.display = 'none';
+                    }, 3000)
+                    return;
+                }
+            }
+        }
+
+        const index = localStorage.length;
+        localStorage.setItem(`account_${index}`, JSON.stringify({
+            email: email,
+            password: password
+        }));
+
+        window.location.href = "login.html";
+    })
+</script>
 </body>
 </html>

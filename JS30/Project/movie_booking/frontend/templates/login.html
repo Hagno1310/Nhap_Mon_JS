@@ -15,19 +15,47 @@
             <form>
                 <label for="">
                     <div class="input-text">Email</div>
-                    <input type="email" placeholder="Enter your email">
+                    <input type="email" placeholder="Enter your email" id="email">
                 </label>
                 <label for="">
                     <div class="input-text">Password</div>
-                    <input type="password" placeholder="Enter your password">
+                    <input type="password" placeholder="Enter your password" id="password">
+                    <p id="login-successfully" style="color: #1de782; font-size: 14px; display: none;">Đăng nhập thành công</p>
+                    <p id="wrong-password" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Sai mật khẩu. Vui lòng thử lại</p>
                 </label>
 
-                <a href="home2.html" class="login-btn">Login Now</a>
+                <div class="login-btn" id="login-btn">Login Now</div>
                 <p class="regis">Don't Have An Account ? <span><a class="regis-link" href="register.html">Register Here</a></span></p>
-
                 </div>
             </form>
         </div>
     </div>
+<script>
+    document.getElementById('login-btn').addEventListener('click', function() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);    
+            if (key.startsWith('account_')) {
+                const account =JSON.parse(localStorage.getItem(key));
+                if (account.email === email && account.password === password) {
+                    document.getElementById('login-successfully').style.display = 'flex';
+                    setTimeout(function() {
+                        document.getElementById('login-successfully').style.display = 'none';
+                    }, 5000)
+                    window.location.href = 'home2.html'
+                    return;
+                } else if (account.email === email && account.password !== password) {
+                    document.getElementById('wrong-password').style.display = 'flex';
+                    setTimeout(function() {
+                        document.getElementById('wrong-password').style.display = 'none';
+                    }, 3000)
+                    return;
+                }
+            }
+        }
+    })
+</script>
 </body>
 </html>

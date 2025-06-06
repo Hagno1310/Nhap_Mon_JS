@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,300;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link rel="stylesheet" href="../style/info.css">
@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo-container"><img src="/frontend/images/logo.png" alt=""></div>
+            <div class="logo-container"><a href="./home2.html"><img src="/frontend/images/logo.png" alt=""></a></div>
             <a href="/frontend/templates/home.html" class="logout-btn">Logout</a>
         </header>
 
@@ -30,24 +30,24 @@
                     <div class="title">Date</div>
                     <div class="date-list">
                         <li>
-                            <p>22 Oct</p>
-                            <p class="day">Mon</p>
+                            <p class="month">22 Oct</p>
+                            <p class="day" id="day">Mon</p>
                         </li>
                         <li>
-                            <p>23 Oct</p>
-                            <p class="day">Tues</p>
+                            <p class="month">11 Jan</p>
+                            <p class="day" id="day">Tues</p>
                         </li>
                         <li>
-                            <p>24 Oct</p>
-                            <p class="day">Wed</p>
+                            <p class="month">24 Oct</p>
+                            <p class="day" id="day">Wed</p>
                         </li>
                         <li>
-                            <p>25 Oct</p>
-                            <p class="day">Thurs</p>
+                            <p class="month">14 Feb</p>
+                            <p class="day" id="day">Thurs</p>
                         </li>
                         <li>
-                            <p>26 Oct</p>
-                            <p class="day">Fri</p>
+                            <p class="month">2 Dec</p>
+                            <p class="day" id="day">Fri</p>
                         </li>
                     </div>
                 </div>
@@ -61,7 +61,30 @@
                     </div>
                 </div>
             </div>
-            <div class="banner-film"></div>
+            <div class="banner-film">
+                <div class="image-container">
+                    <img src="/frontend/images/film-1.png" alt="">
+                </div>
+                <div class="box">
+                    <div class="name">SPIDERMAN ACROSS THE SPIDERVERSE</div>
+                    <p>Movie description here...</p>
+                    <div class="duration">Duration <span>2h30m</span></div>
+                    <div class="type">Type <span>Catoon</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ticket">
+            <div class="ticket-container">
+                <div class="address-pick" id="address-pick"></div>
+                <div class="date-pick" id="date-pick">
+                    <div class="day-pick" id="day-pick"></div>
+                    <div class="time-pick" id="time-pick"></div>
+                </div>
+                <p>*Seat selection can be done after this</p>
+
+                <div class="btn">Proceed</div>
+            </div>
         </div>
     </div>
 <script>
@@ -71,6 +94,8 @@
             document.getElementById('theater').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
 
             this.classList.toggle('active')
+
+            document.getElementById('address-pick').textContent = this.textContent;
         })
     })
 
@@ -80,6 +105,15 @@
             document.getElementById('date').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
 
             this.classList.toggle('active')
+
+            const monthElement = this.querySelector('.month');
+            const monthText = monthElement.textContent.trim(); 
+            const monthAbbr = monthText.split(' ')[1];
+            const day = monthText.split(' ')[0];
+
+            var fullDay = solveDate(day, monthAbbr)
+
+            document.getElementById('day-pick').textContent = `${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
         })
     })
 
@@ -89,8 +123,79 @@
             document.getElementById('time').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
 
             this.classList.toggle('active')
+
+            document.getElementById('time-pick').textContent = this.textContent;
+
         })
     })
+
+    function solveDate(day, month) {
+        switch (day) {
+            case "Mon": 
+                day = 'Monday';
+                break;
+            case "Tues": 
+                day = 'Tuesday';
+                break;
+            case "Wed": 
+                day = 'Wednesday';
+                break;
+            case "Thurs": 
+                day = 'Thursday';
+                break;
+            case "Fri": 
+                day = 'Friday';
+                break;
+            case "Sat": 
+                day = 'Saturday';
+                break;
+            case "Sun": 
+                day = 'Sunday';
+                break;
+        }
+
+        switch (month) {
+            case "Jan":
+                month = "January";
+                break;
+            case "Feb":
+                month = "February";
+                break;
+            case "Mar":
+                month = "March";
+                break;
+            case "Apr":
+                month = "April";
+                break;
+            case "May":
+                month = "May";
+                break;
+            case "Jun":
+                month = "June";
+                break;
+            case "Jul":
+                month = "July";
+                break;
+            case "Aug":
+                month = "August";
+                break;
+            case "Sep":
+                month = "September";
+                break;
+            case "Oct":
+                month = "October";
+                break;
+            case "Nov":
+                month = "November";
+                break;
+            case "Dec":
+                month = "December";
+                break;
+        }
+
+        var year = new Date()
+        return [day, month, year.getFullYear()]
+    }
 </script>
 </body>
 </html>

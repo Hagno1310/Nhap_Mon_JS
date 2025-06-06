@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form action="">
+        <p>Username</p>
+        <input type="text" placeholder="Enter your username" id="username" >
+        <p>Password</p>
+        <input type="password" placeholder="Enter your password" id="password" >
+    </form>
+    <button type="submit" id="btn">Login</button>
+
+<script>
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = 'admin.html';
+    }
+
+    document.getElementById('btn').addEventListener('click', function () {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        const rawData = localStorage.getItem('account_0');
+        const data = JSON.parse(rawData);
+
+        if (username === data.email && password === data.password) {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'admin.html';
+        } else {
+            alert("Sai thông tin đăng nhập. Vui lòng thử lại.");
+        }
+    });
+</script>
+</body>
+</html>

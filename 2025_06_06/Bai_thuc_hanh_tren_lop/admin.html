@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <h1>Admin Page</h1>
+    <button id="btn">Logout</button>
+<script>
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+    }
+
+    document.getElementById('btn').addEventListener('click', function () {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+    });
+</script>
+</body>
+</html>

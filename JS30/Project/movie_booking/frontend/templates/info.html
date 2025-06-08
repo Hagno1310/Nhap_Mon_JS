@@ -83,11 +83,15 @@
                 </div>
                 <p>*Seat selection can be done after this</p>
 
-                <div class="btn">Proceed</div>
+                <div class="btn" id="btn">Proceed</div>
             </div>
         </div>
     </div>
 <script>
+    var isTheaterCheck = false;
+    var isDateCheck = false;
+    var isTimeCheck = false;
+
     document.getElementById('theater').querySelectorAll('li').forEach(item => {
         item.addEventListener('click', function() {
 
@@ -96,6 +100,8 @@
             this.classList.toggle('active')
 
             document.getElementById('address-pick').textContent = this.textContent;
+
+            isTheaterCheck = true;
         })
     })
 
@@ -114,6 +120,8 @@
             var fullDay = solveDate(day, monthAbbr)
 
             document.getElementById('day-pick').textContent = `${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
+
+            isDateCheck = true;
         })
     })
 
@@ -126,6 +134,7 @@
 
             document.getElementById('time-pick').textContent = this.textContent;
 
+            isTimeCheck = true;
         })
     })
 
@@ -196,6 +205,15 @@
         var year = new Date()
         return [day, month, year.getFullYear()]
     }
+
+    document.getElementById('btn').addEventListener('click', function() {
+        if (isTheaterCheck && isDateCheck && isTimeCheck) {
+            window.location.href = 'seat.html'
+            return
+        } else {
+            alert('Thiếu thông tin')
+        }
+    })
 </script>
 </body>
 </html>

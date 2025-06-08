@@ -218,4 +218,5 @@ li:hover {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+    cursor: pointer;
 }

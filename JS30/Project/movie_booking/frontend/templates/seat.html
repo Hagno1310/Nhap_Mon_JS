@@ -93,7 +93,7 @@
 
             <div class="btn-place">
                 <div class="back-btn btn">Back</div>
-                <div class="payment btn">Proceed Payment</div>
+                <div class="payment btn" id="btn">Proceed Payment</div>
             </div>
         </footer>
     </div>
@@ -155,9 +155,9 @@
         })
     })
 
-    
-    
-    
+    document.getElementById('btn').addEventListener('click', function() {
+        window.location.href = 'detail.html'
+    })
 
 </script>
 </html>

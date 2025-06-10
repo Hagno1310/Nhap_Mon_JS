@@ -105,16 +105,20 @@ header {
 }
 
 .time .time-list {
+    width: 510px;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
 }
 
 .time-list li {
+    text-align: center;
+    width: 80px;
     padding: 12px 20px;
     border-radius: 4px;
-    border: 1px solid #fff; 
+    border: 1px solid #fff;
 }
 
 li {
@@ -143,6 +147,10 @@ li:hover {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.box {
+    width: 100%;
 }
 
 .box .name {

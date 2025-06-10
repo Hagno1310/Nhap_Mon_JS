@@ -45,6 +45,7 @@ header {
     0% {
         width: 0;
     }
+
     100% {
         width: 100%;
     }
@@ -143,7 +144,7 @@ header {
 
 .item:hover {
     scale: 1.05;
-    border:  1px solid #1de782;
+    border: 1px solid #1de782;
 }
 
 .item .text {

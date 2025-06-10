@@ -63,7 +63,7 @@ header {
 }
 
 .active {
-    color:  #fff;
+    color: #fff;
     background-color: #1DE782;
     transition: all 0.2s;
 }
@@ -115,6 +115,7 @@ footer {
     font-size: 28px;
     font-weight: bold;
 }
+
 
 .btn {
     padding: 16px 10px;

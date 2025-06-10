@@ -40,7 +40,7 @@ a {
     font-size: 56px;
     line-height: 120%;
     color: #fff;
-    background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0.44));
+    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.44));
     background-clip: text;
     color: transparent;
     transition: all 0.3s;
@@ -48,7 +48,7 @@ a {
 
 .para:hover {
     transform: translateY(-20px);
-    background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0.54));
+    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.54));
     background-clip: text;
 }
 

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="../style/register.css">
     <title>Movie Ticket Booking</title>
 </head>
+
 <body>
     <div class="left-background">
-        <header><div class="logo-container"><img src="/frontend/images/logo.png" alt=""></div></header>
+        <header>
+            <div class="logo-container"><img src="/frontend/images/logo.png" alt=""></div>
+        </header>
         <div class="para">Welcome. <br>
             Begin your cinematic adventure now with our ticketing platform!
         </div>
@@ -27,61 +33,69 @@
                     <div class="input-text">Password</div>
                     <input type="password" placeholder="Enter your password" id="password">
                     <input type="password" placeholder="Confirm your password" id="checkagain">
-                    <p id="wrong-password" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Mật khẩu đã nhập không khớp. Vui lòng thử lại</p>
-                    <p id="fill-input" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Vui lòng nhập đầy đủ thông tin</p>
-                    <p id="already-exist" style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Email này đã được đăng ký. Vui lòng dùng email khác.</p>
+                    <p id="wrong-password"
+                        style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Mật khẩu
+                        đã nhập không khớp. Vui lòng thử lại</p>
+                    <p id="fill-input"
+                        style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Vui lòng
+                        nhập đầy đủ thông tin</p>
+                    <p id="already-exist"
+                        style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif; display: none;">Email
+                        này đã được đăng ký. Vui lòng dùng email khác.</p>
                 </label>
 
                 <div class="login-btn" id="login-btn">Create Account</div>
-                <p class="regis">Already Have An Account ? <span><a class="log-link" href="login.html">Log In</a></span></p>
+                <p class="regis">Already Have An Account ? <span><a class="log-link" href="login.html">Log In</a></span>
+                </p>
 
-                </div>
-            </form>
         </div>
+        </form>
     </div>
-<script>
-    document.getElementById('login-btn').addEventListener('click', function() {
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const check = document.getElementById('checkagain').value.trim();
+    </div>
+    <script>
+        document.getElementById('login-btn').addEventListener('click', function () {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const check = document.getElementById('checkagain').value.trim();
 
-        if (email == "" || password == "" || check == "") {
-            document.getElementById('fill-input').style.display = 'flex';
-            setTimeout(function() {
-                document.getElementById('fill-input').style.display = 'none';
-            }, 2000)
-            return
-        } 
-        if (password != check) {
-            document.getElementById('wrong-password').style.display = 'flex';
-            setTimeout(function() {
-                document.getElementById('wrong-password').style.display = 'none';
-            }, 2000)
-            return
-        } 
+            if (email == "" || password == "" || check == "") {
+                document.getElementById('fill-input').style.display = 'flex';
+                setTimeout(function () {
+                    document.getElementById('fill-input').style.display = 'none';
+                }, 2000)
+                return
+            }
+            if (password != check) {
+                document.getElementById('wrong-password').style.display = 'flex';
+                setTimeout(function () {
+                    document.getElementById('wrong-password').style.display = 'none';
+                }, 2000)
+                return
+            }
 
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith("account_")) {
-                const account = JSON.parse(localStorage.getItem(key));
-                if (account.email === email) {
-                    document.getElementById('already-exist').style.display = 'flex';
-                    setTimeout(function() {
-                        document.getElementById('already-exist').style.display = 'none';
-                    }, 3000)
-                    return;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith("account_")) {
+                    const account = JSON.parse(localStorage.getItem(key));
+                    if (account.email === email) {
+                        document.getElementById('already-exist').style.display = 'flex';
+                        setTimeout(function () {
+                            document.getElementById('already-exist').style.display = 'none';
+                        }, 3000)
+                        return;
+                    }
                 }
             }
-        }
 
-        const index = localStorage.length;
-        localStorage.setItem(`account_${index}`, JSON.stringify({
-            email: email,
-            password: password
-        }));
+            const index = localStorage.length;
+            localStorage.setItem(`account_${index}`, JSON.stringify({
+                email: email,
+                password: password
+            }));
 
-        window.location.href = "login.html";
-    })
-</script>
+            window.location.href = "login.html";
+        })
+    </script>
 </body>
+
 </html>

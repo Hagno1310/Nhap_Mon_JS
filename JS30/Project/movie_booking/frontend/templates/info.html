@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link rel="stylesheet" href="../style/info.css">
     <title>Movie Ticket Booking</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -54,6 +58,17 @@
                 <div class="time" id="time">
                     <div class="title">Time</div>
                     <div class="time-list">
+                        <li>10:10</li>
+                        <li>10:40</li>
+                        <li>11:10</li>
+                        <li>11:40</li>
+                        <li>12:10</li>
+                        <li>12:40</li>
+                        <li>13:10</li>
+                        <li>13:40</li>
+                        <li>14:10</li>
+                        <li>14:40</li>
+                        <li>15:10</li>
                         <li>15:40</li>
                         <li>16:10</li>
                         <li>16:40</li>
@@ -63,10 +78,10 @@
             </div>
             <div class="banner-film">
                 <div class="image-container">
-                    <img src="/frontend/images/film-1.png" alt="">
+                    <img src="" alt="" id="movie-image">
                 </div>
                 <div class="box">
-                    <div class="name">SPIDERMAN ACROSS THE SPIDERVERSE</div>
+                    <div class="name" id="movie-name">SPIDERMAN ACROSS THE SPIDERVERSE</div>
                     <p>Movie description here...</p>
                     <div class="duration">Duration <span>2h30m</span></div>
                     <div class="type">Type <span>Catoon</span></div>
@@ -87,133 +102,148 @@
             </div>
         </div>
     </div>
-<script>
-    var isTheaterCheck = false;
-    var isDateCheck = false;
-    var isTimeCheck = false;
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieName = urlParams.get('movie');
+        const movieImage = urlParams.get('image');
 
-    document.getElementById('theater').querySelectorAll('li').forEach(item => {
-        item.addEventListener('click', function() {
-
-            document.getElementById('theater').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
-
-            this.classList.toggle('active')
-
-            document.getElementById('address-pick').textContent = this.textContent;
-
-            isTheaterCheck = true;
-        })
-    })
-
-    document.getElementById('date').querySelectorAll('li').forEach(item => {
-        item.addEventListener('click', function() {
-
-            document.getElementById('date').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
-
-            this.classList.toggle('active')
-
-            const monthElement = this.querySelector('.month');
-            const monthText = monthElement.textContent.trim(); 
-            const monthAbbr = monthText.split(' ')[1];
-            const day = monthText.split(' ')[0];
-
-            var fullDay = solveDate(day, monthAbbr)
-
-            document.getElementById('day-pick').textContent = `${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
-
-            isDateCheck = true;
-        })
-    })
-
-    document.getElementById('time').querySelectorAll('li').forEach(item => {
-        item.addEventListener('click', function() {
-
-            document.getElementById('time').querySelectorAll('li').forEach(e => {e.classList.remove('active')})
-
-            this.classList.toggle('active')
-
-            document.getElementById('time-pick').textContent = this.textContent;
-
-            isTimeCheck = true;
-        })
-    })
-
-    function solveDate(day, month) {
-        switch (day) {
-            case "Mon": 
-                day = 'Monday';
-                break;
-            case "Tues": 
-                day = 'Tuesday';
-                break;
-            case "Wed": 
-                day = 'Wednesday';
-                break;
-            case "Thurs": 
-                day = 'Thursday';
-                break;
-            case "Fri": 
-                day = 'Friday';
-                break;
-            case "Sat": 
-                day = 'Saturday';
-                break;
-            case "Sun": 
-                day = 'Sunday';
-                break;
+        if (movieName && movieImage) {
+            document.getElementById('movie-name').textContent = movieName.replace(/([A-Z])/g, ' $1').trim();
+            document.getElementById('movie-image').src = movieImage;
         }
 
-        switch (month) {
-            case "Jan":
-                month = "January";
-                break;
-            case "Feb":
-                month = "February";
-                break;
-            case "Mar":
-                month = "March";
-                break;
-            case "Apr":
-                month = "April";
-                break;
-            case "May":
-                month = "May";
-                break;
-            case "Jun":
-                month = "June";
-                break;
-            case "Jul":
-                month = "July";
-                break;
-            case "Aug":
-                month = "August";
-                break;
-            case "Sep":
-                month = "September";
-                break;
-            case "Oct":
-                month = "October";
-                break;
-            case "Nov":
-                month = "November";
-                break;
-            case "Dec":
-                month = "December";
-                break;
+        var isTheaterCheck = false;
+        var isDateCheck = false;
+        var isTimeCheck = false;
+
+        document.getElementById('theater').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('theater').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                document.getElementById('address-pick').textContent = this.textContent;
+
+                isTheaterCheck = true;
+            })
+        })
+
+        document.getElementById('date').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('date').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                const monthElement = this.querySelector('.month');
+                const monthText = monthElement.textContent.trim();
+                const monthAbbr = monthText.split(' ')[1];
+                const day = monthText.split(' ')[0];
+
+                var fullDay = solveDate(day, monthAbbr)
+
+                document.getElementById('day-pick').textContent = `${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
+
+                isDateCheck = true;
+            })
+        })
+
+        document.getElementById('time').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('time').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                document.getElementById('time-pick').textContent = this.textContent;
+
+                isTimeCheck = true;
+            })
+        })
+
+        function solveDate(day, month) {
+            switch (day) {
+                case "Mon":
+                    day = 'Monday';
+                    break;
+                case "Tues":
+                    day = 'Tuesday';
+                    break;
+                case "Wed":
+                    day = 'Wednesday';
+                    break;
+                case "Thurs":
+                    day = 'Thursday';
+                    break;
+                case "Fri":
+                    day = 'Friday';
+                    break;
+                case "Sat":
+                    day = 'Saturday';
+                    break;
+                case "Sun":
+                    day = 'Sunday';
+                    break;
+            }
+
+            switch (month) {
+                case "Jan":
+                    month = "January";
+                    break;
+                case "Feb":
+                    month = "February";
+                    break;
+                case "Mar":
+                    month = "March";
+                    break;
+                case "Apr":
+                    month = "April";
+                    break;
+                case "May":
+                    month = "May";
+                    break;
+                case "Jun":
+                    month = "June";
+                    break;
+                case "Jul":
+                    month = "July";
+                    break;
+                case "Aug":
+                    month = "August";
+                    break;
+                case "Sep":
+                    month = "September";
+                    break;
+                case "Oct":
+                    month = "October";
+                    break;
+                case "Nov":
+                    month = "November";
+                    break;
+                case "Dec":
+                    month = "December";
+                    break;
+            }
+
+            var year = new Date()
+            return [day, month, year.getFullYear()]
         }
 
-        var year = new Date()
-        return [day, month, year.getFullYear()]
-    }
-
-    document.getElementById('btn').addEventListener('click', function() {
-        if (isTheaterCheck && isDateCheck && isTimeCheck) {
-            window.location.href = 'seat.html'
-            return
-        } else {
-            alert('Thiếu thông tin')
-        }
-    })
-</script>
+        document.getElementById('btn').addEventListener('click', function () {
+            if (isTheaterCheck && isDateCheck && isTimeCheck) {
+                const theater = document.getElementById('address-pick').textContent;
+                const date = document.getElementById('day-pick').textContent;
+                const time = document.getElementById('time-pick').textContent;
+                const movie = movieName;
+                const image = movieImage;
+                window.location.href = `seat.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movie)}&image=${encodeURIComponent(image)}`;
+                return
+            } else {
+                alert('Thiếu thông tin')
+            }
+        })
+    </script>
 </body>
+
 </html>

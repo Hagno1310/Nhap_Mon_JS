@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../style/success.css">
+    <title>Movie Ticket Booking</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Payment Success</h2>
+        <div class="tick">
+            <div class="circle-load"></div>
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <button class="btn view" id="btn">View Ticket</button>
+        <button class="btn back" id="btn">Back to Homepage</button>
+    </div>
+
+    <script>
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.classList.contains('view')) {
+                    window.location.href = '/ticket';
+                } else if (button.classList.contains('back')) {
+                    window.location.href = 'home2.html';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

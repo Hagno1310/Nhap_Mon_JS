@@ -15,7 +15,7 @@
             <input type="number" maxlength="1">
             <input type="number" maxlength="1">
         </div>
-        <button class="submit-btn">Submit</button>
+        <button class="submit-btn" id="submit-btn">Submit</button>
     </div>
 
     <script>
@@ -38,6 +38,18 @@
                     inputs[index - 1].focus();
                 }
             });
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', function () {
+            const otp = Array.from(inputs).map(input => input.value).join('');
+            if (otp.length === inputs.length) {
+                // Gửi OTP đến server hoặc xử lý tiếp theo
+                console.log('OTP submitted:', otp);
+                // Cuyển hướng đến trang thành công
+                window.location.href = './success.html';
+            } else {
+                alert('Please enter a valid OTP');
+            }
         });
     </script>
 </body>

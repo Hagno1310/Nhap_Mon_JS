@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../style/ticket.css">
+</head>
+
+<body>
+    <header>
+        <div class="title">Ticket Detail</div>
+    </header>
+
+    <div class="container">
+        <div class="item">
+            <div class="date">
+                <div class="text">Date</div>
+                <p>Mon, 23 Oct 2023</p>
+            </div>
+            <div class="title">
+                <div class="text">Movie Title</div>
+                <p>SPIDERMAN NO WAY HOME</p>
+            </div>
+            <div class="ticket-time">
+                <div class="ticket">
+                    <div class="text">Ticket (<span>3</span>)</div>
+                    <p>C8, C9, C10</p>
+                </div>
+                <div class="time">
+                    <div class="text">Hours</div>
+                    <p>14:50</p>
+                </div>
+            </div>
+            <div class="download">Download Ticket</div>
+        </div>
+
+        <button class="btn back" id="btn">Back to Homepage</button>
+    </div>
+
+    <script>
+        const ticketItem = JSON.parse(localStorage.getItem('bookingDetails'));
+        document.querySelector('.date p').textContent = ticketItem.date;
+        document.querySelector('.title p').textContent = ticketItem.movie;
+        document.querySelector('.ticket-time .ticket p').textContent = ticketItem.seats;
+        document.querySelector('.ticket-time .time p').textContent = ticketItem.time;
+    </script>
+</body>
+</html>

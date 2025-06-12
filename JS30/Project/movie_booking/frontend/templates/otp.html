@@ -30,6 +30,11 @@
                     // Chuyển focus sang ô tiếp theo
                     inputs[index + 1].focus();
                 }
+
+                if (this.value.length === 1 && index === inputs.length - 1) {
+                    // Nếu là ô cuối cùng, bỏ focus
+                    this.blur();
+                }
             });
 
             input.addEventListener('keydown', function (e) {

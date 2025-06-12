@@ -13,6 +13,10 @@ body {
     background-repeat: no-repeat;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 a {
     text-decoration: none;
 }

@@ -138,8 +138,8 @@
 
                 const monthElement = this.querySelector('.month');
                 const monthText = monthElement.textContent.trim();
-                const monthAbbr = monthText.split(' ')[1];
                 const day = monthText.split(' ')[0];
+                const monthAbbr = monthText.split(' ')[1];
                 const dayElement = this.querySelector('.day').textContent.trim();
 
                 var fullDay = solveDate(day, monthAbbr)

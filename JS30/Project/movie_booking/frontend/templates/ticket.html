@@ -21,20 +21,20 @@
         <div class="item">
             <div class="date">
                 <div class="text">Date</div>
-                <p>Mon, 23 Oct 2023</p>
+                <p></p>
             </div>
             <div class="title">
                 <div class="text">Movie Title</div>
-                <p>SPIDERMAN NO WAY HOME</p>
+                <p></p>
             </div>
             <div class="ticket-time">
                 <div class="ticket">
                     <div class="text">Ticket (<span>3</span>)</div>
-                    <p>C8, C9, C10</p>
+                    <p></p>
                 </div>
                 <div class="time">
                     <div class="text">Hours</div>
-                    <p>14:50</p>
+                    <p></p>
                 </div>
             </div>
             <div class="download">Download Ticket</div>
@@ -43,12 +43,37 @@
         <button class="btn back" id="btn">Back to Homepage</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         const ticketItem = JSON.parse(localStorage.getItem('bookingDetails'));
+
+        const newTicket = {
+            id: Date.now(), // dùng làm khóa duy nhất
+            date: ticketItem.date,
+            movie: ticketItem.movie,
+            seats: ticketItem.seats,
+            time: ticketItem.time
+        };
+
+        //Thêm vé mới vào LocalStorage
+        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+        tickets.push(newTicket);
+        localStorage.setItem('tickets', JSON.stringify(tickets));
+
         document.querySelector('.date p').textContent = ticketItem.date;
         document.querySelector('.title p').textContent = ticketItem.movie;
         document.querySelector('.ticket-time .ticket p').textContent = ticketItem.seats;
         document.querySelector('.ticket-time .time p').textContent = ticketItem.time;
+
+        document.getElementById('btn').addEventListener('click', () => {
+            window.location.href = 'home2.html'; 
+        });
+
+        document.querySelector('.download').addEventListener('click', () => {
+            const element = document.querySelector('.item');
+            html2pdf().from(element).save('ticket.pdf');
+        });
+
     </script>
 </body>
 </html>

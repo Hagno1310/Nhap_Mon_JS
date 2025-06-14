@@ -52,7 +52,11 @@
                         setTimeout(function () {
                             document.getElementById('login-successfully').style.display = 'none';
                         }, 5000)
-                        window.location.href = 'home2.html'
+                        if (key === 'account_0') {
+                            window.location.href = 'admin_movie.html'
+                        } else {
+                            window.location.href = 'home2.html'
+                        }
                         return;
                     } else if (account.email === email && account.password !== password) {
                         document.getElementById('wrong-password').style.display = 'flex';

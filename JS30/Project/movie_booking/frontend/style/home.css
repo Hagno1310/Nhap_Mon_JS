@@ -130,6 +130,7 @@ header {
 .my-ticket {
     position: relative;
     color: #fff;
+    font-size: 18px;
 }
 
 @keyframes RunLeft {

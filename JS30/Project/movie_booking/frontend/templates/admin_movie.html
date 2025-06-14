@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Movie</title>
+    <link rel="stylesheet" href="/frontend/style/admin_movie.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Movie</h2>
+        <ul>
+            <li class="active">Movies</li>
+            <a href="./admin_theater.html"><li>Theaters</li></a>
+            <li>Users</li>
+            <li>Orders</li>
+            <li>Report</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">    
+            <div class="user-info">
+                <span class="avatar">a</span>
+                <span>administrator</span>
+            </div>
+            <button class="create-btn">+ Create new</button>
+        </div>
+
+        <!-- Movie Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cover</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><img src="https://via.placeholder.com/100x150" alt="Movie Cover" class="cover-img"></td>
+                        <td>Title</td>
+                        <td>Status</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                            <i class="fas fa-trash action-btn"></i>
+                        </td>
+                    </tr>
+                    <!-- Thêm các dòng khác nếu cần -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

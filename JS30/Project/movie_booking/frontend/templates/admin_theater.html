@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Theater</title>
+    <link rel="stylesheet" href="/frontend/style/admin_theater.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Theater</h2>
+        <ul>
+            <a href="./admin_movie.html"><li>Movies</li></a>
+            <li class="active">Theaters</li>
+            <li>Users</li>
+            <li>Orders</li>
+            <li>Report</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="user-info">
+                <span class="avatar">a</span>
+                <span>administrator</span>
+            </div>
+            <button class="create-btn">+ Create new</button>
+        </div>
+
+        <!-- Theater Table -->
+        <div class="table-container">
+            <h3>Theater</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>KL</td>
+                        <td>Status</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bukit Bintang</td>
+                        <td>Status</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Shah Alam</td>
+                        <td>Status</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Seats Table -->
+        <div class="table-container">
+            <h3>Seats</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Seats</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>KL</td>
+                        <td>Type</td>
+                        <td>Seats</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bukit Bintang</td>
+                        <td>Type</td>
+                        <td>Seats</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Shah Alam</td>
+                        <td>Type</td>
+                        <td>Seats</td>
+                        <td>
+                            <i class="fas fa-eye action-btn"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.action-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Action button clicked!');
+            });
+        });
+    </script>
+</body>
+</html>

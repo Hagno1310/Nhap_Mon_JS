@@ -12,13 +12,19 @@
     <title>Movie Ticket Booking</title>
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="container">
         <header>
-            <div class="logo-container"><a href="./home2.html"><img src="/frontend/images/logo.png" alt=""></a></div>
+            <div class="logo-container"><a href="./home2"><img src="/images/logo.png" alt=""></a></div>
             <div class="nav-container">
-                <a href="/frontend/templates/myticket.html" class="my-ticket">My Ticket</a>
-                <a href="/frontend/templates/home.html" class="logout-btn">Logout</a>
+                <a href="/myticket" class="my-ticket">My Ticket</a>
+                <a href="/" class="logout-btn">Logout</a>
             </div>
         </header>
 
@@ -72,6 +78,8 @@
 
         const upcomingList = document.getElementById('upcoming-list');
         const historyList = document.getElementById('history-list');
+
+        // Phần này sau sẽ được thay thế bằng dữ liệu thực tế từ backend
         const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
 
         tickets.forEach(ticket => {

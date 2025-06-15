@@ -12,10 +12,16 @@
     <title>Movie Ticket Booking</title>
 </head>
 
+<style>
+    .left-background {
+        background-image: url(images/bg_signup_2.png);
+    }
+</style>
+
 <body>
     <div class="left-background">
         <header>
-            <div class="logo-container"><img src="/frontend/images/logo.png" alt=""></div>
+            <div class="logo-container"><img src="/images/logo.png" alt=""></div>
         </header>
         <div class="para">Welcome. <br>
             Begin your cinematic adventure now with our ticketing platform!
@@ -45,7 +51,7 @@
                 </label>
 
                 <div class="login-btn" id="login-btn">Create Account</div>
-                <p class="regis">Already Have An Account ? <span><a class="log-link" href="login.html">Log In</a></span>
+                <p class="regis">Already Have An Account ? <span><a class="log-link" href="/login">Log In</a></span>
                 </p>
 
         </div>
@@ -93,7 +99,7 @@
                 password: password
             }));
 
-            window.location.href = "login.html";
+            window.location.href = "/login";
         })
     </script>
 </body>

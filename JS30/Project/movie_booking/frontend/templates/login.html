@@ -49,31 +49,45 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key.startsWith('account_')) {
-                    const account = JSON.parse(localStorage.getItem(key));
-                    if (account.email === email && account.password === password) {
-                        document.getElementById('login-successfully').style.display = 'flex';
-                        setTimeout(function () {
-                            document.getElementById('login-successfully').style.display = 'none';
-                        }, 5000)
-                        if (key === 'account_0') {
-                            window.location.href = '/admin_movie'
+            // Gửi yêu cầu GET đến endpoint /api
+            fetch('/api/account', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                // Tìm tài khoản khớp với email và password
+                const account = data.find(acc => acc.email === email && acc.password === password);
+                if (account) {
+                    document.getElementById('login-successfully').style.display = 'flex';
+                    setTimeout(() => {
+                        document.getElementById('login-successfully').style.display = 'none';
+                        // Chuyển hướng dựa trên role
+                        if (account.role === 'admin') {
+                            window.location.href = '/admin_movie';
                         } else {
-                            window.location.href = '/home2'
+                            window.location.href = '/home';
                         }
-                        return;
-                    } else if (account.email === email && account.password !== password) {
-                        document.getElementById('wrong-password').style.display = 'flex';
-                        setTimeout(function () {
-                            document.getElementById('wrong-password').style.display = 'none';
-                        }, 3000)
-                        return;
-                    }
+                    }, 3000);
+                } else if (data.some(acc => acc.email === email)) {
+                    document.getElementById('wrong-password').style.display = 'flex';
+                    setTimeout(() => {
+                        document.getElementById('wrong-password').style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert('Invalid credentials');
                 }
-            }
-        })
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred');
+            });
+        });
     </script>
 </body>
 

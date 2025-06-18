@@ -72,3 +72,21 @@ def post_account(data: dict = Body(...)):
 @app.get("/admin_movie", response_class=HTMLResponse)
 def admin_movie_page(request: Request):
     return templates.TemplateResponse("admin_movie.html", {"request": request})
+
+@app.get("/info", response_class=HTMLResponse)
+def info_page(request: Request):
+    return templates.TemplateResponse("info.html", {"request": request})
+
+@app.get("/detail", response_class=HTMLResponse)
+def detail_page(request: Request):
+    return templates.TemplateResponse("detail.html", {"request": request})
+
+@app.get("/api/movies", response_class=JSONResponse)
+def get_movies(request: Request):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM movies")
+        data = cursor.fetchall()
+        return data
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)

@@ -13,11 +13,17 @@
     <title>Movie Ticket Booking</title>
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="container">
         <header>
-            <div class="logo-container"><a href="./home2.html"><img src="/frontend/images/logo.png" alt=""></a></div>
-            <a href="/frontend/templates/home.html" class="logout-btn">Logout</a>
+            <div class="logo-container"><a href="/home"><img src="/images/logo.png" alt=""></a></div>
+            <a href="/" class="logout-btn">Logout</a>
         </header>
 
         <div class="movie">
@@ -103,163 +109,171 @@
         </div>
     </div>
     <script>
-        const API_BASE_URL = 'http://localhost:8000';
-        let selectedTheater = null;
-        let selectedDate = null;
-        let selectedTime = null;
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieName = urlParams.get('movie');
+        const movieImage = urlParams.get('image');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeMovieDetails();
-            loadTheaters();
-            loadShowtimes();
-        });
+        fetch('/api/movies', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                const bannerFilm = document.querySelector('.banner-film');
+                data = data.find(movie => movie.title === movieName);
+                bannerFilm.innerHTML = `
+                    <div class="image-container">
+                        <img src="${data.image_url}" alt="" id="movie-image">
+                    </div>
+                    <div class="box">
+                        <div class="name" id="movie-name">${data.title}</div>
+                        <p>${data.description}</p>
+                        <div class="duration">Duration <span>${data.duration_minutes}</span></div>
+                        <div class="type">Type
+                            <span>${data.genre}</span>
+                        </div>
+                    </div>`; 
 
-        // Initialize movie details from URL parameters
-        function initializeMovieDetails() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const movieName = urlParams.get('movie');
-            const movieImage = urlParams.get('image');
+            })
+            .catch(error => console.error('Error fetching movies:', error));
 
-            if (movieName && movieImage) {
-                document.getElementById('movie-name').textContent = movieName.replace(/([A-Z])/g, ' $1').trim();
-                document.getElementById('movie-image').src = movieImage;
+        var isTheaterCheck = false;
+        var isDateCheck = false;
+        var isTimeCheck = false;
+
+        document.getElementById('theater').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('theater').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                document.getElementById('address-pick').textContent = this.textContent;
+
+                isTheaterCheck = true;
+            })
+        })
+
+        document.getElementById('date').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('date').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                const monthElement = this.querySelector('.month');
+                const monthText = monthElement.textContent.trim();
+                const day = monthText.split(' ')[0];
+                const monthAbbr = monthText.split(' ')[1];
+                const dayElement = this.querySelector('.day').textContent.trim();
+
+                var fullDay = solveDate(day, monthAbbr)
+
+                document.getElementById('day-pick').textContent = `${dayElement}, ${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
+
+                isDateCheck = true;
+            })
+        })
+
+        document.getElementById('time').querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', function () {
+
+                document.getElementById('time').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+
+                this.classList.toggle('active')
+
+                document.getElementById('time-pick').textContent = this.textContent;
+
+                isTimeCheck = true;
+            })
+        })
+
+        function solveDate(day, month) {
+            switch (day) {
+                case "Mon":
+                    day = 'Monday';
+                    break;
+                case "Tues":
+                    day = 'Tuesday';
+                    break;
+                case "Wed":
+                    day = 'Wednesday';
+                    break;
+                case "Thurs":
+                    day = 'Thursday';
+                    break;
+                case "Fri":
+                    day = 'Friday';
+                    break;
+                case "Sat":
+                    day = 'Saturday';
+                    break;
+                case "Sun":
+                    day = 'Sunday';
+                    break;
             }
-        }
 
-        // Fetch and display theaters
-        async function loadTheaters() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/theaters`);
-                const theaters = await response.json();
-                const theaterList = document.getElementById('theater').querySelector('.address');
-                theaterList.innerHTML = '';
-
-                theaters.forEach(theater => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<i class="fa-solid fa-location-dot"></i>${theater.name}`;
-                    li.addEventListener('click', () => selectTheater(theater, li));
-                    theaterList.appendChild(li);
-                });
-            } catch (error) {
-                showError('Failed to load theaters');
+            switch (month) {
+                case "Jan":
+                    month = "January";
+                    break;
+                case "Feb":
+                    month = "February";
+                    break;
+                case "Mar":
+                    month = "March";
+                    break;
+                case "Apr":
+                    month = "April";
+                    break;
+                case "May":
+                    month = "May";
+                    break;
+                case "Jun":
+                    month = "June";
+                    break;
+                case "Jul":
+                    month = "July";
+                    break;
+                case "Aug":
+                    month = "August";
+                    break;
+                case "Sep":
+                    month = "September";
+                    break;
+                case "Oct":
+                    month = "October";
+                    break;
+                case "Nov":
+                    month = "November";
+                    break;
+                case "Dec":
+                    month = "December";
+                    break;
             }
+
+            var year = new Date()
+            return [day, month, year.getFullYear()]
         }
 
-        // Fetch and display showtimes
-        async function loadShowtimes() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/showtimes`);
-                const showtimes = await response.json();
-                const uniqueDates = [...new Set(showtimes.map(s => s.show_date))];
-                const dateList = document.getElementById('date').querySelector('.date-list');
-                const timeList = document.getElementById('time').querySelector('.time-list');
-                dateList.innerHTML = '';
-                timeList.innerHTML = '';
-
-                uniqueDates.forEach(date => {
-                    const li = document.createElement('li');
-                    const [year, month, day] = date.split('-');
-                    const dateObj = new Date(year, month - 1, day);
-                    const monthAbbr = dateObj.toLocaleString('default', { month: 'short' });
-                    const dayName = dateObj.toLocaleString('default', { weekday: 'short' });
-                    li.innerHTML = `<p class="month">${day} ${monthAbbr}</p><p class="day">${dayName}</p>`;
-                    li.addEventListener('click', () => selectDate(date, li));
-                    dateList.appendChild(li);
-                });
-
-                // Time will be populated after selecting a date
-            } catch (error) {
-                showError('Failed to load showtimes');
-            }
-        }
-
-        // Handle theater selection
-        function selectTheater(theater, element) {
-            document.getElementById('theater').querySelectorAll('li').forEach(e => e.classList.remove('active'));
-            element.classList.add('active');
-            selectedTheater = theater;
-            document.getElementById('address-pick').textContent = theater.name;
-            updateTimes();
-        }
-
-        // Handle date selection
-        async function selectDate(date, element) {
-            document.getElementById('date').querySelectorAll('li').forEach(e => e.classList.remove('active'));
-            element.classList.add('active');
-            selectedDate = date;
-            const dateObj = new Date(date);
-            const dayName = dateObj.toLocaleString('default', { weekday: 'long' });
-            const [year, month, day] = date.split('-');
-            document.getElementById('day-pick').textContent = `${dayName}, ${day} ${dateObj.toLocaleString('default', { month: 'long' })} ${year}`;
-            updateTimes();
-        }
-
-        // Update available times based on theater and date
-        async function updateTimes() {
-            if (!selectedTheater || !selectedDate) return;
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/showtimes?theater_id=${selectedTheater.theater_id}&date=${selectedDate}`);
-                const showtimes = await response.json();
-                const timeList = document.getElementById('time').querySelector('.time-list');
-                timeList.innerHTML = '';
-
-                showtimes.forEach(showtime => {
-                    const li = document.createElement('li');
-                    li.textContent = showtime.show_time.slice(0, 5); // Format HH:MM
-                    li.addEventListener('click', () => selectTime(showtime, li));
-                    timeList.appendChild(li);
-                });
-            } catch (error) {
-                showError('Failed to load showtimes');
-            }
-        }
-
-        // Handle time selection
-        function selectTime(showtime, element) {
-            document.getElementById('time').querySelectorAll('li').forEach(e => e.classList.remove('active'));
-            element.classList.add('active');
-            selectedTime = showtime;
-            document.getElementById('time-pick').textContent = showtime.show_time.slice(0, 5);
-        }
-
-        // Handle proceed button click
-        document.getElementById('btn').addEventListener('click', async () => {
-            if (selectedTheater && selectedDate && selectedTime) {
-                try {
-                    const bookingData = {
-                        showtime_id: selectedTime.showtime_id,
-                        theater_id: selectedTheater.theater_id,
-                        movie_id: selectedTime.movie_id,
-                        booking_date: new Date().toISOString()
-                    };
-
-                    const response = await fetch(`${API_BASE_URL}/bookings`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(bookingData)
-                    });
-
-                    if (response.ok) {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const movieName = urlParams.get('movie');
-                        const movieImage = urlParams.get('image');
-                        window.location.href = `seat.html?theater=${encodeURIComponent(selectedTheater.name)}&date=${encodeURIComponent(document.getElementById('day-pick').textContent)}&time=${encodeURIComponent(selectedTime.show_time.slice(0, 5))}&movie=${encodeURIComponent(movieName)}&image=${encodeURIComponent(movieImage)}&showtime_id=${selectedTime.showtime_id}`;
-                    } else {
-                        showError('Failed to create booking');
-                    }
-                } catch (error) {
-                    showError('Error processing booking');
-                }
+        document.getElementById('btn').addEventListener('click', function () {
+            if (isTheaterCheck && isDateCheck && isTimeCheck) {
+                const theater = document.getElementById('address-pick').textContent;
+                const date = document.getElementById('day-pick').textContent;
+                const time = document.getElementById('time-pick').textContent;
+                const movie = movieName;
+                const image = movieImage;
+                window.location.href = `seat.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movie)}&image=${encodeURIComponent(image)}`;
+                return
             } else {
-                showError('Please select theater, date, and time');
+                alert('Thiếu thông tin')
             }
-        });
-
-        // Show error message
-        function showError(message) {
-            alert(message);
-        }
+        })
     </script>
 </body>
 

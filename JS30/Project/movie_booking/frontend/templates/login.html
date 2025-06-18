@@ -73,12 +73,12 @@
                         } else {
                             window.location.href = '/home';
                         }
-                    }, 3000);
+                    }, 2000);
                 } else if (data.some(acc => acc.email === email)) {
                     document.getElementById('wrong-password').style.display = 'flex';
                     setTimeout(() => {
                         document.getElementById('wrong-password').style.display = 'none';
-                    }, 3000);
+                    }, 2000);
                 } else {
                     alert('Invalid credentials');
                 }

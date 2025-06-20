@@ -6,7 +6,7 @@ import mysql.connector
 
 app = FastAPI()
 
-#Connect to MySQL database
+# Kết nối tới MySQL
 db = mysql.connector.connect(
     host="localhost",
     user="Hagno1310",
@@ -14,24 +14,24 @@ db = mysql.connector.connect(
     database="js"
 )
 
-# Mount static folders
+# Mount static files
 app.mount("/style", StaticFiles(directory="frontend/style"), name="style")
 app.mount("/javascript", StaticFiles(directory="frontend/javascript"), name="javascript")
 app.mount("/images", StaticFiles(directory="frontend/images"), name="images")
 
-# Configure template folder
+# Templates (HTML)
 templates = Jinja2Templates(directory="frontend/templates")
 
-# Route để render một trang HTML
+# ------------------ ROUTES ------------------
+
 @app.get("/", response_class=HTMLResponse)
-def read_home(request: Request):
+def home_page(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 @app.get("/home", response_class=HTMLResponse)
-def read_home(request: Request):
+def user_home(request: Request):
     return templates.TemplateResponse("home2.html", {"request": request})
 
-# Example route cho trang login
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
@@ -52,45 +52,50 @@ def info_page(request: Request):
 def detail_page(request: Request):
     return templates.TemplateResponse("detail.html", {"request": request})
 
+
+# ------------------ API: ACCOUNT ------------------
+
 @app.get("/api/account", response_class=JSONResponse)
 def get_accounts():
     try:
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM accounts")
         data = cursor.fetchall()
+        cursor.close()
         return data
     except Exception as e:
+        print("❌ Lỗi /api/account GET:", e)
         return JSONResponse({"error": str(e)}, status_code=500)
 
-@app.post('/api/account', response_class=JSONResponse)
+@app.post("/api/account", response_class=JSONResponse)
 def post_account(data: dict = Body(...)):
     try:
         cursor = db.cursor()
-        query = """ 
-            INSERT INTO accounts (email, password)
-            VALUES (%s, %s)
-        """
-
-        values = (
-            data["email"], data["password"]
-        )
-
+        query = "INSERT INTO accounts (email, password) VALUES (%s, %s)"
+        values = (data["email"], data["password"])
         cursor.execute(query, values)
         db.commit()
+        cursor.close()
         return {"message": "Đã thêm thành công"}
     except Exception as e:
+        print("❌ Lỗi /api/account POST:", e)
         return JSONResponse({"error": str(e)}, status_code=500)
 
+# ------------------ API: MOVIES ------------------
 
 @app.get("/api/movies", response_class=JSONResponse)
-def get_movies(request: Request):
+def get_movies():
     try:
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM movies")
         data = cursor.fetchall()
+        cursor.close()
         return data
     except Exception as e:
+        print("❌ Lỗi /api/movies:", e)
         return JSONResponse({"error": str(e)}, status_code=500)
+
+# ------------------ API: THEATERS ------------------
 
 @app.get("/api/theaters", response_class=JSONResponse)
 def get_theaters():
@@ -98,6 +103,8 @@ def get_theaters():
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM theaters")
         data = cursor.fetchall()
+        cursor.close()
         return data
     except Exception as e:
+        print("❌ Lỗi /api/theaters:", e)
         return JSONResponse({"error": str(e)}, status_code=500)

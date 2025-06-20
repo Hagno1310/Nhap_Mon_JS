@@ -31,9 +31,7 @@
                 <div class="theater" id="theater">
                     <div class="title">Theater</div>
                     <ul class="address">
-                        <li><i class="fa-solid fa-location-dot"></i>Bukit Bintang</li>
-                        <li><i class="fa-solid fa-location-dot"></i>Putrajaye</li>
-                        <li><i class="fa-solid fa-location-dot"></i>KB Mall</li>
+
                     </ul>
                 </div>
                 <div class="date" id="date">
@@ -108,60 +106,83 @@
             </div>
         </div>
     </div>
-    <script>
-        // 1. Kiểm tra login
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (!user) {
-            alert("Bạn chưa đăng nhập!");
-            window.location.href = "/login";
-        }
 
-        // 2. Lấy param từ URL
+    <script type="module">
+        import { getCache, setCache } from "/javascript/cache.js";
+
         const urlParams = new URLSearchParams(window.location.search);
-        const movieName = urlParams.get('movie');
 
-        // 3. Lấy dữ liệu movie + theaters cùng lúc
-        Promise.all([
-            fetch('/api/movies').then(res => {
-                if (!res.ok) throw new Error("Lỗi tải phim");
-                return res.json();
-            }),
-            fetch('/api/theaters').then(res => {
-                if (!res.ok) throw new Error("Lỗi tải rạp");
-                return res.json();
-            })
-        ])
-        .then(([movies, theaters]) => {
-            // 4. Tìm phim theo tên
-            const movie = movies.find(m => m.title === movieName);
-            if (!movie) {
-                alert("Không tìm thấy phim!");
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && performance.getEntriesByType("navigation")[0].type === "back_forward")) {
+                location.reload(); // Ép tải lại trang
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", () => {
+            // Kiểm tra login
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) {
+                alert("Bạn chưa đăng nhập!");
+                window.location.href = "/login";
                 return;
             }
 
-            // 5. Gán thông tin phim vào banner
-            const bannerFilm = document.querySelector('.banner-film');
-            bannerFilm.innerHTML = `
-                <div class="image-container">
-                    <img src="${movie.image_url}" alt="" id="movie-image">
-                </div>
-                <div class="box">
-                    <div class="name" id="movie-name">${movie.title}</div>
-                    <p>${movie.description}</p>
-                    <div class="duration">Duration <span>${movie.duration_minutes}m</span></div>
-                    <div class="type">Type <span>${movie.genre}</span></div>
-                </div>`;
+            const movieName = urlParams.get("movie");
+            const movieImage = urlParams.get("image");
 
-            // 6. Hiển thị danh sách rạp
-            const theaterList = document.querySelector('.address');
-            theaterList.innerHTML = theaters.map(theater =>
-                `<li><i class="fa-solid fa-location-dot"></i>${theater.name}</li>`
-            ).join('');
-        })
-        .catch(error => {
-            console.error('Lỗi:', error);
-            alert("Đã xảy ra lỗi khi tải dữ liệu.");
+            // Dùng cache
+            let movies = getCache("movies");
+            let theaters = getCache("theaters");
+
+            const fetchData = [];
+
+            if (!movies) {
+                fetchData.push(
+                    fetch("/api/movies").then(res => res.json()).then(data => {
+                        setCache("movies", data);
+                        movies = data;
+                    })
+                );
+            }
+
+            if (!theaters) {
+                fetchData.push(
+                    fetch("/api/theaters").then(res => res.json()).then(data => {
+                        setCache("theaters", data);
+                        theaters = data;
+                    })
+                );
+            }
+
+            // Chờ load xong nếu cần
+            Promise.all(fetchData).then(() => {
+                const movie = movies.find(m => m.title === movieName);
+                if (!movie) {
+                    alert("Không tìm thấy phim!");
+                    return;
+                }
+
+                // Update banner
+                const bannerFilm = document.querySelector(".banner-film");
+                bannerFilm.innerHTML = `
+                    <div class="image-container">
+                        <img src="${movie.image_url}" alt="" id="movie-image">
+                    </div>
+                    <div class="box">
+                        <div class="name" id="movie-name">${movie.title}</div>
+                        <p>${movie.description}</p>
+                        <div class="duration">Duration <span>${movie.duration_minutes}m</span></div>
+                        <div class="type">Type <span>${movie.genre}</span></div>
+                    </div>`;
+
+                // Update rạp
+                const theaterList = document.querySelector(".address"); 
+                theaterList.innerHTML = theaters.map(t =>
+                    `<li><i class="fa-solid fa-location-dot"></i>${t.name}</li>`
+                ).join('');
+            });
         });
+
 
         var isTheaterCheck = false;
         var isDateCheck = false;

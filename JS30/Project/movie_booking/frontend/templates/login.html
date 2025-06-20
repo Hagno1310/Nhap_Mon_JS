@@ -64,6 +64,7 @@
                 // Tìm tài khoản khớp với email và password
                 const account = data.find(acc => acc.email === email && acc.password === password);
                 if (account) {
+                    localStorage.setItem("user", JSON.stringify(account));
                     document.getElementById('login-successfully').style.display = 'flex';
                     setTimeout(() => {
                         document.getElementById('login-successfully').style.display = 'none';

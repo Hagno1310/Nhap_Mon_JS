@@ -109,38 +109,59 @@
         </div>
     </div>
     <script>
+        // 1. Kiểm tra login
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+            alert("Bạn chưa đăng nhập!");
+            window.location.href = "/login";
+        }
+
+        // 2. Lấy param từ URL
         const urlParams = new URLSearchParams(window.location.search);
         const movieName = urlParams.get('movie');
-        const movieImage = urlParams.get('image');
 
-        fetch('/api/movies', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        // 3. Lấy dữ liệu movie + theaters cùng lúc
+        Promise.all([
+            fetch('/api/movies').then(res => {
+                if (!res.ok) throw new Error("Lỗi tải phim");
+                return res.json();
+            }),
+            fetch('/api/theaters').then(res => {
+                if (!res.ok) throw new Error("Lỗi tải rạp");
+                return res.json();
+            })
+        ])
+        .then(([movies, theaters]) => {
+            // 4. Tìm phim theo tên
+            const movie = movies.find(m => m.title === movieName);
+            if (!movie) {
+                alert("Không tìm thấy phim!");
+                return;
+            }
+
+            // 5. Gán thông tin phim vào banner
+            const bannerFilm = document.querySelector('.banner-film');
+            bannerFilm.innerHTML = `
+                <div class="image-container">
+                    <img src="${movie.image_url}" alt="" id="movie-image">
+                </div>
+                <div class="box">
+                    <div class="name" id="movie-name">${movie.title}</div>
+                    <p>${movie.description}</p>
+                    <div class="duration">Duration <span>${movie.duration_minutes}m</span></div>
+                    <div class="type">Type <span>${movie.genre}</span></div>
+                </div>`;
+
+            // 6. Hiển thị danh sách rạp
+            const theaterList = document.querySelector('.address');
+            theaterList.innerHTML = theaters.map(theater =>
+                `<li><i class="fa-solid fa-location-dot"></i>${theater.name}</li>`
+            ).join('');
         })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                const bannerFilm = document.querySelector('.banner-film');
-                data = data.find(movie => movie.title === movieName);
-                bannerFilm.innerHTML = `
-                    <div class="image-container">
-                        <img src="${data.image_url}" alt="" id="movie-image">
-                    </div>
-                    <div class="box">
-                        <div class="name" id="movie-name">${data.title}</div>
-                        <p>${data.description}</p>
-                        <div class="duration">Duration <span>${data.duration_minutes}</span></div>
-                        <div class="type">Type
-                            <span>${data.genre}</span>
-                        </div>
-                    </div>`; 
-
-            })
-            .catch(error => console.error('Error fetching movies:', error));
+        .catch(error => {
+            console.error('Lỗi:', error);
+            alert("Đã xảy ra lỗi khi tải dữ liệu.");
+        });
 
         var isTheaterCheck = false;
         var isDateCheck = false;

@@ -68,6 +68,8 @@ header {
 }
 
 .theater .address {
+    width: 500px;
+    flex-wrap: wrap;
     display: flex;
     gap: 16px;
 }

@@ -2,27 +2,27 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <link rel="stylesheet" href="../style/info.css">
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../style/info.css" />
     <title>Movie Ticket Booking</title>
+    <style>
+        body {
+            background-image: url(/images/bg.png.png);
+        }
+    </style>
 </head>
-
-<style>
-    body {
-        background-image: url(/images/bg.png.png);
-    }
-</style>
 
 <body>
     <div class="container">
         <header>
-            <div class="logo-container"><a href="/home"><img src="/images/logo.png" alt=""></a></div>
+            <div class="logo-container">
+                <a href="/home"><img src="/images/logo.png" alt="Logo" /></a>
+            </div>
             <a href="/" class="logout-btn">Logout</a>
         </header>
 
@@ -31,9 +31,7 @@
                 <div class="theater" id="theater">
                     <div class="title">Theater</div>
                     <ul class="address">
-                        <li><i class="fa-solid fa-location-dot"></i>Bukit Bintang</li>
-                        <li><i class="fa-solid fa-location-dot"></i>Putrajaye</li>
-                        <li><i class="fa-solid fa-location-dot"></i>KB Mall</li>
+                        <!-- Load từ API -->
                     </ul>
                 </div>
                 <div class="date" id="date">
@@ -41,23 +39,23 @@
                     <div class="date-list">
                         <li>
                             <p class="month">22 Oct</p>
-                            <p class="day" id="day">Mon</p>
+                            <p class="day">Mon</p>
                         </li>
                         <li>
                             <p class="month">11 Jan</p>
-                            <p class="day" id="day">Tues</p>
+                            <p class="day">Tues</p>
                         </li>
                         <li>
                             <p class="month">24 Oct</p>
-                            <p class="day" id="day">Wed</p>
+                            <p class="day">Wed</p>
                         </li>
                         <li>
                             <p class="month">14 Feb</p>
-                            <p class="day" id="day">Thurs</p>
+                            <p class="day">Thurs</p>
                         </li>
                         <li>
                             <p class="month">2 Dec</p>
-                            <p class="day" id="day">Fri</p>
+                            <p class="day">Fri</p>
                         </li>
                     </div>
                 </div>
@@ -82,16 +80,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="banner-film">
-                <div class="image-container">
-                    <img src="" alt="" id="movie-image">
-                </div>
-                <div class="box">
-                    <div class="name" id="movie-name">SPIDERMAN ACROSS THE SPIDERVERSE</div>
-                    <p>Movie description here...</p>
-                    <div class="duration">Duration <span>2h30m</span></div>
-                    <div class="type">Type <span>Catoon</span></div>
-                </div>
+                <!-- Nội dung phim sẽ được cập nhật từ API -->
             </div>
         </div>
 
@@ -103,74 +94,94 @@
                     <div class="time-pick" id="time-pick"></div>
                 </div>
                 <p>*Seat selection can be done after this</p>
-
                 <div class="btn" id="btn">Proceed</div>
             </div>
         </div>
     </div>
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieName = urlParams.get('movie');
-        const movieImage = urlParams.get('image');
-        console.log(movieName, movieImage);
+        let movieName = "";
+        let movieImage = "";
 
-        fetch('/api/movies', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                const bannerFilm = document.querySelector('.banner-film');
-                data = data.find(movie => movie.title === movieName);
-                console.log(data);
-                bannerFilm.innerHTML = `
-                    <div class="image-container">
-                        <img src="${data.image_url}" alt="" id="movie-image">
-                    </div>
-                    <div class="box">
-                        <div class="name" id="movie-name">${data.title}</div>
-                        <p>${data.description}</p>
-                        <div class="duration">Duration <span>${durationToMinutes(data.duration_minutes)}</span></div>
-                        <div class="type"><Type <span>${data.genre}</span></div>`
-            })  
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            movieName = urlParams.get("movie");
+            movieImage = urlParams.get("image");
 
-        function durationToMinutes(duration) {
-            const hours = Math.floor(duration / 60);
-            const minutes = duration % 60;
-            return `${hours}h ${minutes}m`;
+            if (!movieName || !movieImage) {
+                alert("Thiếu thông tin phim. Quay lại chọn phim.");
+                window.location.href = "/home";
+                return;
+            }
+
+            loadMovieAndTheaterData();
+        };
+
+        function loadMovieAndTheaterData() {
+            Promise.all([
+                fetch("/api/movies").then(res => res.json()),
+                fetch("/api/theaters").then(res => res.json())
+            ])
+                .then(([moviesData, theatersData]) => {
+                    const movie = moviesData.find(m => m.title === movieName);
+                    if (!movie) {
+                        alert("Không tìm thấy phim: " + movieName);
+                        return;
+                    }
+
+                    document.querySelector(".banner-film").innerHTML = `
+          <div class="image-container">
+            <img src="${movie.image_url}" alt="" id="movie-image">
+          </div>
+          <div class="box">
+            <div class="name" id="movie-name">${movie.title}</div>
+            <p>${movie.description}</p>
+            <div class="duration">Duration <span>${durationToMinutes(movie.duration_minutes)}</span></div>
+            <div class="type">Type <span>${movie.genre}</span></div>
+          </div>`;
+
+                    updateTheatersList(theatersData);
+                })
+                .catch(error => {
+                    console.error("Lỗi khi tải dữ liệu:", error);
+                    alert("Không thể tải dữ liệu.");
+                });
         }
 
-        var isTheaterCheck = false;
-        var isDateCheck = false;
-        var isTimeCheck = false;
+        function updateTheatersList(theaters) {
+            const container = document.querySelector("#theater .address");
+            container.innerHTML = theaters.map(theater =>
+                `<li><i class="fa-solid fa-location-dot"></i>${theater.name}</li>`
+            ).join("");
+            setupTheaterListeners();
+        }
 
-        document.getElementById('theater').querySelectorAll('li').forEach(item => {
-            item.addEventListener('click', function () {
+        function durationToMinutes(duration) {
+            const h = Math.floor(duration / 60);
+            const m = duration % 60;
+            return `${h}h ${m}m`;
+        }
 
-                document.getElementById('theater').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
+        function setupTheaterListeners() {
+            document.querySelectorAll("#theater li").forEach(item => {
+                item.addEventListener("click", function () {
+                    document.querySelectorAll("#theater li").forEach(e => e.classList.remove("active"));
+                    this.classList.add("active");
+                    document.getElementById("address-pick").textContent = this.textContent;
+                    isTheaterCheck = true;
+                });
+            });
+        }
 
-                this.classList.toggle('active')
-
-                document.getElementById('address-pick').textContent = this.textContent;
-
-                isTheaterCheck = true;
-            })
-        })
-        
         const dayMap = {
-            Mon: 'Monday', Tues: 'Tuesday', Wed: 'Wednesday', Thurs: 'Thursday',
-            Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'
+            Mon: "Monday", Tues: "Tuesday", Wed: "Wednesday",
+            Thurs: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday"
         };
 
         const monthMap = {
-            Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April',
-            May: 'May', Jun: 'June', Jul: 'July', Aug: 'August',
-            Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December'
+            Jan: "January", Feb: "February", Mar: "March", Apr: "April",
+            May: "May", Jun: "June", Jul: "July", Aug: "August",
+            Sep: "September", Oct: "October", Nov: "November", Dec: "December"
         };
 
         function solveDate(day, month) {
@@ -178,43 +189,64 @@
         }
 
         function setupPicker(containerId, pickId, callback) {
-            const items = document.getElementById(containerId).querySelectorAll('li');
-            items.forEach(item => {
-                item.addEventListener('click', function () {
-                    items.forEach(i => i.classList.remove('active'));
-                    this.classList.toggle('active');
+            document.querySelectorAll(`#${containerId} li`).forEach(item => {
+                item.addEventListener("click", function () {
+                    document.querySelectorAll(`#${containerId} li`).forEach(i => i.classList.remove("active"));
+                    this.classList.add("active");
                     callback(this);
                 });
             });
         }
 
-        setupPicker('date', 'day-pick', el => {
-            const monthText = el.querySelector('.month').textContent.trim();
-            const [day, monthAbbr] = monthText.split(' ');
-            const dayName = el.querySelector('.day').textContent.trim();
-            const [fullDay, fullMonth, year] = solveDate(day, monthAbbr);
-            document.getElementById('day-pick').textContent = `${dayName}, ${fullDay} ${fullMonth} ${year}`;
+        setupPicker("date", "day-pick", el => {
+            const [day, monthAbbr] = el.querySelector(".month").textContent.trim().split(" ");
+            const dayName = el.querySelector(".day").textContent.trim();
+            const [fullDay, fullMonth, year] = solveDate(dayName, monthAbbr);
+            document.getElementById("day-pick").textContent = `${dayName}, ${day} ${fullMonth} ${year}`;
             isDateCheck = true;
         });
 
-        setupPicker('time', 'time-pick', el => {
-            document.getElementById('time-pick').textContent = el.textContent;
+        setupPicker("time", "time-pick", el => {
+            document.getElementById("time-pick").textContent = el.textContent;
             isTimeCheck = true;
         });
 
-        document.getElementById('btn').addEventListener('click', function () {
+        let isTheaterCheck = false;
+        let isDateCheck = false;
+        let isTimeCheck = false;
+
+        // ✅ BẤM PROCEED → CHUYỂN TRANG & XÓA PARAM
+        document.getElementById("btn").addEventListener("click", function () {
             if (isTheaterCheck && isDateCheck && isTimeCheck) {
-                const theater = document.getElementById('address-pick').textContent;
-                const date = document.getElementById('day-pick').textContent;
-                const time = document.getElementById('time-pick').textContent;
-                const movie = movieName;
-                const image = movieImage;
-                window.location.href = `seat.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movie)}&image=${encodeURIComponent(image)}`;
-                return
+                const theater = document.getElementById("address-pick").textContent;
+                const date = document.getElementById("day-pick").textContent;
+                const time = document.getElementById("time-pick").textContent;
+                const url = `seat.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movieName)}&image=${encodeURIComponent(movieImage)}`;
+
+                // ✅ Clear param trước khi chuyển trang
+                const cleanURL = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanURL);
+
+                window.location.href = url;
             } else {
-                alert('Thiếu thông tin')
+                alert("Vui lòng chọn đầy đủ thông tin.");
             }
-        })
+        });
+
+        // ✅ CLICK LOGO → VỀ HOME & CLEAR PARAM
+        document.querySelector(".logo-container a").addEventListener("click", function (e) {
+            e.preventDefault();
+            const cleanURL = window.location.origin + "/home";
+            window.history.replaceState({}, document.title, cleanURL);
+            window.location.href = cleanURL;
+        });
+
+        document.querySelector(".logout-btn").addEventListener("click", function (e) {
+            e.preventDefault();
+            const cleanURL = window.location.origin + "/";
+            window.history.replaceState({}, document.title, cleanURL);
+            window.location.href = cleanURL;
+        });
     </script>
 </body>
 

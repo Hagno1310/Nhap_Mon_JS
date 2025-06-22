@@ -112,6 +112,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const movieName = urlParams.get('movie');
         const movieImage = urlParams.get('image');
+        console.log(movieName, movieImage);
 
         fetch('/api/movies', {
             method: 'GET',
@@ -126,6 +127,7 @@
             .then(data => {
                 const bannerFilm = document.querySelector('.banner-film');
                 data = data.find(movie => movie.title === movieName);
+                console.log(data);
                 bannerFilm.innerHTML = `
                     <div class="image-container">
                         <img src="${data.image_url}" alt="" id="movie-image">
@@ -133,14 +135,34 @@
                     <div class="box">
                         <div class="name" id="movie-name">${data.title}</div>
                         <p>${data.description}</p>
-                        <div class="duration">Duration <span>${data.duration_minutes}</span></div>
-                        <div class="type">Type
-                            <span>${data.genre}</span>
-                        </div>
-                    </div>`; 
-
+                        <div class="duration">Duration <span>${durationToMinutes(data.duration_minutes)}</span></div>
+                        <div class="type"><Type <span>${data.genre}</span></div>`
             })
-            .catch(error => console.error('Error fetching movies:', error));
+        
+        fetch('/api/theaters', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                const theaterList = document.querySelector('.address');
+                data.forEach(theater => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fa-solid fa-location-dot"></i>${theater.name}`;
+                    theaterList.appendChild(li);
+                });
+            });    
+
+        function durationToMinutes(duration) {
+            const hours = Math.floor(duration / 60);
+            const minutes = duration % 60;
+            return `${hours}h ${minutes}m`;
+        }
 
         var isTheaterCheck = false;
         var isDateCheck = false;
@@ -158,108 +180,46 @@
                 isTheaterCheck = true;
             })
         })
+        
+        const dayMap = {
+            Mon: 'Monday', Tues: 'Tuesday', Wed: 'Wednesday', Thurs: 'Thursday',
+            Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'
+        };
 
-        document.getElementById('date').querySelectorAll('li').forEach(item => {
-            item.addEventListener('click', function () {
-
-                document.getElementById('date').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
-
-                this.classList.toggle('active')
-
-                const monthElement = this.querySelector('.month');
-                const monthText = monthElement.textContent.trim();
-                const day = monthText.split(' ')[0];
-                const monthAbbr = monthText.split(' ')[1];
-                const dayElement = this.querySelector('.day').textContent.trim();
-
-                var fullDay = solveDate(day, monthAbbr)
-
-                document.getElementById('day-pick').textContent = `${dayElement}, ${fullDay[0]} ${fullDay[1]} ${fullDay[2]}`
-
-                isDateCheck = true;
-            })
-        })
-
-        document.getElementById('time').querySelectorAll('li').forEach(item => {
-            item.addEventListener('click', function () {
-
-                document.getElementById('time').querySelectorAll('li').forEach(e => { e.classList.remove('active') })
-
-                this.classList.toggle('active')
-
-                document.getElementById('time-pick').textContent = this.textContent;
-
-                isTimeCheck = true;
-            })
-        })
+        const monthMap = {
+            Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April',
+            May: 'May', Jun: 'June', Jul: 'July', Aug: 'August',
+            Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December'
+        };
 
         function solveDate(day, month) {
-            switch (day) {
-                case "Mon":
-                    day = 'Monday';
-                    break;
-                case "Tues":
-                    day = 'Tuesday';
-                    break;
-                case "Wed":
-                    day = 'Wednesday';
-                    break;
-                case "Thurs":
-                    day = 'Thursday';
-                    break;
-                case "Fri":
-                    day = 'Friday';
-                    break;
-                case "Sat":
-                    day = 'Saturday';
-                    break;
-                case "Sun":
-                    day = 'Sunday';
-                    break;
-            }
-
-            switch (month) {
-                case "Jan":
-                    month = "January";
-                    break;
-                case "Feb":
-                    month = "February";
-                    break;
-                case "Mar":
-                    month = "March";
-                    break;
-                case "Apr":
-                    month = "April";
-                    break;
-                case "May":
-                    month = "May";
-                    break;
-                case "Jun":
-                    month = "June";
-                    break;
-                case "Jul":
-                    month = "July";
-                    break;
-                case "Aug":
-                    month = "August";
-                    break;
-                case "Sep":
-                    month = "September";
-                    break;
-                case "Oct":
-                    month = "October";
-                    break;
-                case "Nov":
-                    month = "November";
-                    break;
-                case "Dec":
-                    month = "December";
-                    break;
-            }
-
-            var year = new Date()
-            return [day, month, year.getFullYear()]
+            return [dayMap[day] || day, monthMap[month] || month, new Date().getFullYear()];
         }
+
+        function setupPicker(containerId, pickId, callback) {
+            const items = document.getElementById(containerId).querySelectorAll('li');
+            items.forEach(item => {
+                item.addEventListener('click', function () {
+                    items.forEach(i => i.classList.remove('active'));
+                    this.classList.toggle('active');
+                    callback(this);
+                });
+            });
+        }
+
+        setupPicker('date', 'day-pick', el => {
+            const monthText = el.querySelector('.month').textContent.trim();
+            const [day, monthAbbr] = monthText.split(' ');
+            const dayName = el.querySelector('.day').textContent.trim();
+            const [fullDay, fullMonth, year] = solveDate(day, monthAbbr);
+            document.getElementById('day-pick').textContent = `${dayName}, ${fullDay} ${fullMonth} ${year}`;
+            isDateCheck = true;
+        });
+
+        setupPicker('time', 'time-pick', el => {
+            document.getElementById('time-pick').textContent = el.textContent;
+            isTimeCheck = true;
+        });
 
         document.getElementById('btn').addEventListener('click', function () {
             if (isTheaterCheck && isDateCheck && isTimeCheck) {

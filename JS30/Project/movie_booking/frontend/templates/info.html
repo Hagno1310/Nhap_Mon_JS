@@ -137,26 +137,7 @@
                         <p>${data.description}</p>
                         <div class="duration">Duration <span>${durationToMinutes(data.duration_minutes)}</span></div>
                         <div class="type"><Type <span>${data.genre}</span></div>`
-            })
-        
-        fetch('/api/theaters', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                const theaterList = document.querySelector('.address');
-                data.forEach(theater => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<i class="fa-solid fa-location-dot"></i>${theater.name}`;
-                    theaterList.appendChild(li);
-                });
-            });    
+            })  
 
         function durationToMinutes(duration) {
             const hours = Math.floor(duration / 60);

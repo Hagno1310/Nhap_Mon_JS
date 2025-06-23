@@ -13,6 +13,12 @@
     <title>Movie Ticket Booking</title>
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="container">
         <h2>Payment Success</h2>
@@ -28,9 +34,9 @@
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', () => {
                 if (button.classList.contains('view')) {
-                    window.location.href = 'ticket.html';
+                    window.location.href = 'ticket';
                 } else if (button.classList.contains('back')) {
-                    window.location.href = 'home2.html';
+                    window.location.href = 'home';
                 }
             });
         });

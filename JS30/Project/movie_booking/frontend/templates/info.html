@@ -221,7 +221,7 @@
                 const theater = document.getElementById("address-pick").textContent;
                 const date = document.getElementById("day-pick").textContent;
                 const time = document.getElementById("time-pick").textContent;
-                const url = `seat.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movieName)}&image=${encodeURIComponent(movieImage)}`;
+                const url = `seat?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movieName)}&image=${encodeURIComponent(movieImage)}`;
 
                 // ✅ Clear param trước khi chuyển trang
                 const cleanURL = window.location.origin + window.location.pathname;

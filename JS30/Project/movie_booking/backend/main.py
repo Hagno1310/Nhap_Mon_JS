@@ -44,10 +44,25 @@ def admin_movie_page(request: Request):
 def info_page(request: Request):
     return templates.TemplateResponse("info.html", {"request": request})
 
+@app.get("/seat", response_class=HTMLResponse)
+def seat_page(request: Request):
+    return templates.TemplateResponse("seat.html", {"request": request})
+
 @app.get("/detail", response_class=HTMLResponse)
 def detail_page(request: Request):
     return templates.TemplateResponse("detail.html", {"request": request})
 
+@app.get("/otp", response_class=HTMLResponse)
+def otp_page(request: Request):
+    return templates.TemplateResponse("otp.html", {"request": request})
+
+@app.get("/success", response_class=HTMLResponse)
+def success_page(request: Request):
+    return templates.TemplateResponse("success.html", {"request": request})
+
+@app.get("/ticket", response_class=HTMLResponse)
+def ticket_page(request: Request):
+    return templates.TemplateResponse("ticket.html", {"request": request})
 # ==================--==API=========================
 @app.get("/api/account", response_class=JSONResponse)
 def get_accounts():
@@ -92,6 +107,18 @@ def get_theaters(request: Request):
     try:
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM theaters")
+        data = cursor.fetchall()
+        db.commit()
+        cursor.close()
+        return data
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+    
+@app.get("/api/showtimes", response_class=JSONResponse)
+def get_showtimes(request: Request):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM showtimes")
         data = cursor.fetchall()
         db.commit()
         cursor.close()

@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="../style/ticket.css">
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <header>
         <div class="title">Ticket Detail</div>
@@ -66,7 +72,7 @@
         document.querySelector('.ticket-time .time p').textContent = ticketItem.time;
 
         document.getElementById('btn').addEventListener('click', () => {
-            window.location.href = 'home2.html'; 
+            window.location.href = 'home'; 
         });
 
         document.querySelector('.download').addEventListener('click', () => {

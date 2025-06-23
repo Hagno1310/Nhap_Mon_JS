@@ -13,6 +13,12 @@
     <title>Movie Ticket Booking</title>
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="container">
         <header>
@@ -170,7 +176,7 @@
         document.getElementById('btn').addEventListener('click', function () {
             if (selectedSeats.length > 0) {
                 const totalPrice = (selectedSeats.length * price).toFixed(2);
-                window.location.href = `detail.html?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movie)}&image=${encodeURIComponent(image)}&seats=${encodeURIComponent(selectedSeats.join(', '))}&total=${encodeURIComponent(totalPrice)}`;
+                window.location.href = `detail?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movie)}&image=${encodeURIComponent(image)}&seats=${encodeURIComponent(selectedSeats.join(', '))}&total=${encodeURIComponent(totalPrice)}`;
             } else {
                 alert('Vui lòng chọn ít nhất một ghế!');
             }

@@ -12,6 +12,12 @@
     <title>Movie Ticket Booking Detail</title>
 </head>
 
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="container">
         <div class="order-detail">Order detail</div>
@@ -84,7 +90,7 @@
             localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
 
             // Chuyển hướng đến trang thanh toán
-            window.location.href = 'otp.html';
+            window.location.href = 'otp';
         });
     </script>
 </body>

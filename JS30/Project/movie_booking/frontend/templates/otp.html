@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="../style/otp.css">
     <title>Enter OTP</title>
 </head>
+
+<style>
+    body {
+        background-image: url(/images/bg.png.png);
+    }
+</style>
+
 <body>
     <div class="otp-container">
         <h2>Enter Otp</h2>
@@ -51,7 +58,7 @@
                 // Gửi OTP đến server hoặc xử lý tiếp theo
                 console.log('OTP submitted:', otp);
                 // Cuyển hướng đến trang thành công
-                window.location.href = './success.html';
+                window.location.href = './success';
             } else {
                 alert('Please enter a valid OTP');
             }

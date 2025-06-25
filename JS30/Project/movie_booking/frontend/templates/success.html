@@ -31,12 +31,27 @@
     </div>
 
     <script>
+        const ticketItem = JSON.parse(localStorage.getItem('bookingDetails'));
+
+        const newTicket = {
+            id: Date.now(), // dùng làm khóa duy nhất
+            date: ticketItem.date,
+            movie: ticketItem.movie,
+            seats: ticketItem.seats,
+            time: ticketItem.time
+        };
+
+        //Thêm vé mới vào LocalStorage
+        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+        tickets.push(newTicket);
+        localStorage.setItem('tickets', JSON.stringify(tickets));
+
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', () => {
                 if (button.classList.contains('view')) {
-                    window.location.href = 'ticket';
+                    window.location.href = '/ticket';
                 } else if (button.classList.contains('back')) {
-                    window.location.href = 'home';
+                    window.location.href = '/home';
                 }
             });
         });

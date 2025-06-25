@@ -35,7 +35,7 @@
             </div>
             <div class="ticket-time">
                 <div class="ticket">
-                    <div class="text">Ticket (<span>3</span>)</div>
+                    <div class="text">Ticket (<span class="quantity">0</span>)</div>
                     <p></p>
                 </div>
                 <div class="time">
@@ -53,26 +53,14 @@
     <script>
         const ticketItem = JSON.parse(localStorage.getItem('bookingDetails'));
 
-        const newTicket = {
-            id: Date.now(), // dùng làm khóa duy nhất
-            date: ticketItem.date,
-            movie: ticketItem.movie,
-            seats: ticketItem.seats,
-            time: ticketItem.time
-        };
-
-        //Thêm vé mới vào LocalStorage
-        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-        tickets.push(newTicket);
-        localStorage.setItem('tickets', JSON.stringify(tickets));
-
         document.querySelector('.date p').textContent = ticketItem.date;
         document.querySelector('.title p').textContent = ticketItem.movie;
         document.querySelector('.ticket-time .ticket p').textContent = ticketItem.seats;
         document.querySelector('.ticket-time .time p').textContent = ticketItem.time;
+        document.querySelector('.quantity').textContent = ticketItem.seats.split(',').length;
 
         document.getElementById('btn').addEventListener('click', () => {
-            window.location.href = 'home'; 
+            window.location.href = 'home';
         });
 
         document.querySelector('.download').addEventListener('click', () => {
@@ -82,4 +70,5 @@
 
     </script>
 </body>
+
 </html>

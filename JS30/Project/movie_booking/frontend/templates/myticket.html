@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo-container"><a href="./home2"><img src="/images/logo.png" alt=""></a></div>
+            <div class="logo-container"><a href="/home"><img src="/images/logo.png" alt=""></a></div>
             <div class="nav-container">
                 <a href="/myticket" class="my-ticket">My Ticket</a>
                 <a href="/" class="logout-btn">Logout</a>
@@ -79,11 +79,18 @@
         const upcomingList = document.getElementById('upcoming-list');
         const historyList = document.getElementById('history-list');
 
-        // Phần này sau sẽ được thay thế bằng dữ liệu thực tế từ backend
         const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
 
+        const today = new Date(); // Ngày hiện tại (ngày hệ thống)
+
+        function parseTicketDate(dateStr) {
+            return new Date(dateStr);
+        }
+
         tickets.forEach(ticket => {
-            upcomingList.innerHTML += `
+            const ticketDate = parseTicketDate(ticket.date);
+
+            const ticketHTML = `
                 <div class="item">
                     <div class="date">
                         <div class="text">Date</div>
@@ -95,7 +102,7 @@
                     </div>
                     <div class="ticket-time">
                         <div class="ticket">
-                            <div class="text">Ticket (<span>3</span>)</div>
+                            <div class="text">Ticket (<span class="quantity">${ticket.seats.split(',').length}</span>)</div>
                             <p>${ticket.seats}</p>
                         </div>
                         <div class="time">
@@ -104,9 +111,16 @@
                         </div>
                     </div>
                     <div class="download">Download Ticket</div>
-                </div>`
-        });
+                </div>
+            `;
 
+            // So sánh ngày
+            if (ticketDate < today.setHours(0, 0, 0, 0)) {
+                historyList.innerHTML += ticketHTML;
+            } else {
+                upcomingList.innerHTML += ticketHTML;
+            }
+        });
     </script>
 </body>
 

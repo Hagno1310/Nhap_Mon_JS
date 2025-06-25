@@ -40,6 +40,10 @@ def register_page(request: Request):
 def admin_movie_page(request: Request):
     return templates.TemplateResponse("admin_movie.html", {"request": request})
 
+@app.get("/admin_theater", response_class=HTMLResponse)
+def admin_movie_page(request: Request):
+    return templates.TemplateResponse("admin_theater.html", {"request": request})
+
 @app.get("/info", response_class=HTMLResponse)
 def info_page(request: Request):
     return templates.TemplateResponse("info.html", {"request": request})
@@ -63,6 +67,10 @@ def success_page(request: Request):
 @app.get("/ticket", response_class=HTMLResponse)
 def ticket_page(request: Request):
     return templates.TemplateResponse("ticket.html", {"request": request})
+
+@app.get("/myticket", response_class=HTMLResponse)
+def myticket_page(request: Request):
+    return templates.TemplateResponse("myticket.html", {"request": request})
 # ==================--==API=========================
 @app.get("/api/account", response_class=JSONResponse)
 def get_accounts():
@@ -99,6 +107,47 @@ def get_movies(request: Request):
         data = cursor.fetchall()
         cursor.close()
         return data
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+@app.post("/api/movies", response_class=JSONResponse)
+def post_movie(data: dict = Body(...)):
+    try:
+        cursor = db.cursor()
+        query = """
+            INSERT INTO movies (title, description, duration_minutes, genre, image_url)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        values = (data["title"], data["description"], data["duration_minutes"], data["genre"], data["image_url"])
+        cursor.execute(query, values)
+        db.commit()
+        cursor.close()
+        return {"message": "Đã thêm thành công"}
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+@app.get("/api/movies/{movie_id}", response_class=JSONResponse)
+def get_movie(movie_id: int, request: Request):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM movies WHERE movie_id = %s", (movie_id,))
+        data = cursor.fetchone()
+        cursor.close()
+        if data:
+            return data
+        else:
+            return JSONResponse({"error": "Movie not found"}, status_code=404)
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+@app.delete("/api/movies/{movie_id}", response_class=JSONResponse)
+def delete_movie(movie_id: int):
+    try:
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM movies WHERE movie_id = %s", (movie_id,))
+        db.commit()
+        cursor.close()
+        return {"message": "Movie deleted successfully"}
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 

@@ -140,24 +140,3 @@ table td .cover-img {
     height: auto;
     object-fit: cover;
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 200px;
-    }
-
-    .main-content {
-        margin-left: 200px;
-    }
-
-    table th,
-    table td {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .header .create-btn {
-        padding: 6px 12px;
-    }
-}

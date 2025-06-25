@@ -98,12 +98,12 @@ header {
 }
 
 .films-menu .item {
-    width: 250px;
+    width: 250px !important;
     height: 408px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 13px;
     cursor: pointer;
     transition: scale 0.2s;

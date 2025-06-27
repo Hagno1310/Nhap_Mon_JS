@@ -174,3 +174,45 @@ def get_showtimes(request: Request):
         return data
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
+    
+@app.get("/api/tickets", response_class=JSONResponse)
+def get_tickets(request: Request):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM ticket")
+        data = cursor.fetchall()
+        db.commit()
+        cursor.close()
+        return data
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+    
+@app.get("/api/tickets/{email}", response_class=JSONResponse)
+def get_tickets(email: str):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM ticket WHERE email = %s", (email,))
+        tickets = cursor.fetchall()
+        cursor.close()
+        if not tickets:
+            return JSONResponse({"message": "No tickets found for this email"}, status_code=200)
+        return tickets
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+    
+@app.post("/api/tickets", response_class=JSONResponse)
+def post_ticket(data: dict = Body(...)):
+    try:
+        cursor = db.cursor()
+        query = """
+            INSERT INTO ticket (date, movie_title, ticket_seats, hours, email)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        values = (data["date"], data["movie_title"], data["ticket_seats"], data["hours"], data["email"])
+        cursor.execute(query, values)
+        db.commit()
+        cursor.close()
+        return {"message": "Ticket booked successfully"}
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+    

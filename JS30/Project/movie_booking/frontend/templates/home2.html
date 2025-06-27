@@ -30,36 +30,40 @@
         <div class="list-film">
             <div class="title">now showing</div>
             <div class="films-menu">
-                <a href="./info?movie=Furiosa: A Mad Max Saga&image=/images/film-1.png" class="item">
-                    <div class="banner"><img src="/images/film-1.png" alt=""></div>
-                    <div class="film-name">Furiosa: A Mad Max Saga</div>
-                </a>
-                <a href="./info?movie=IF&image=/images/film-2.png" class="item">
-                    <div class="banner"><img src="/images/film-2.png" alt=""></div>
-                    <div class="film-name">IF</div>
-                </a>
-                <a href="./info?movie=Civil War&image=/images/film-3.png" class="item">
-                    <div class="banner"><img src="/images/film-3.png" alt=""></div>
-                    <div class="film-name">Civil War</div>
-                </a>
-                <a href="./info?movie=Kingdom of the Planet of the Apes&image=/images/film-4.png" class="item">
-                    <div class="banner"><img src="/images/film-4.png" alt=""></div>
-                    <div class="film-name">Kingdom of the Planet of the Apes</div>
-                </a>
-                <a href="./info?movie=Dune: Part Two&image=/images/film-5.png" class="item">
-                    <div class="banner"><img src="/images/film-5.png" alt=""></div>
-                    <div class="film-name">Dune: Part Two</div>
-                </a>
-                <a href="./info?movie=Sheriff: Narko Integriti&image=/images/film-6.png" class="item">
-                    <div class="banner"><img src="/images/film-6.png" alt=""></div>
-                    <div class="film-name">Sheriff: Narko Integriti</div>
-                </a>
             </div>
         </div>
     </div>
 
     <script>
-        
+
+        fetch('/api/movies')
+            .then(response => response.json())
+            .then(data => {
+                const filmsMenu = document.querySelector('.films-menu');
+                filmsMenu.innerHTML = ''; // Clear existing items
+
+                data.forEach(movie => {
+                    const item = document.createElement('a');
+                    item.href = `./info?movie=${encodeURIComponent(movie.title)}&image=${encodeURIComponent(movie.image_url)}`;
+                    item.className = 'item';
+
+                    const banner = document.createElement('div');
+                    banner.className = 'banner';
+                    const img = document.createElement('img');
+                    img.src = movie.image_url;
+                    img.alt = movie.title;
+                    banner.appendChild(img);
+
+                    const filmName = document.createElement('div');
+                    filmName.className = 'film-name';
+                    filmName.textContent = movie.title;
+
+                    item.appendChild(banner);
+                    item.appendChild(filmName);
+                    filmsMenu.appendChild(item);
+                });
+            })
+            .catch(error => console.error('Error fetching movies:', error));
     </script>
 </body>
 

@@ -69,8 +69,11 @@
                         document.getElementById('login-successfully').style.display = 'none';
                         // Chuyển hướng dựa trên role
                         if (account.role === 'admin') {
+                            //Đổi user trong localStorage
+                            localStorage.setItem('user', JSON.stringify(account));
                             window.location.href = '/admin_movie';
                         } else {
+                            localStorage.setItem('user', JSON.stringify(account));
                             window.location.href = '/home';
                         }
                     }, 2000);

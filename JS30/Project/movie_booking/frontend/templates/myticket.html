@@ -7,7 +7,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet" href="../style/myticket.css">
     <title>Movie Ticket Booking</title>
 </head>
@@ -35,91 +34,110 @@
 
         <div class="upcoming list" id="upcoming-list"></div>
         <div class="history list" id="history-list" style="display: none;">
-            <div class="item">
-                <div class="date">
-                    <div class="text">Date</div>
-                    <p>Mon, 23 Oct 2023</p>
-                </div>
-                <div class="title">
-                    <div class="text">Movie Title</div>
-                    <p>SPIDERMAN NO WAY HOME</p>
-                </div>
-                <div class="ticket-time">
-                    <div class="ticket">
-                        <div class="text">Ticket (<span>3</span>)</div>
-                        <p>C8, C9, C10</p>
-                    </div>
-                    <div class="time">
-                        <div class="text">Hours</div>
-                        <p>14:50</p>
-                    </div>
-                </div>
-                <div class="download">Download Ticket</div>
-            </div>
+            <!-- Ví dụ dữ liệu (sẽ được thay thế bởi API) -->
         </div>
     </div>
 
     <script>
-        document.getElementById('upcoming').addEventListener('click', function () {
-            document.getElementById('upcoming').classList.add('active')
-            document.getElementById('history').classList.remove('active')
-
-            document.getElementById('upcoming-list').style.display = 'flex';
-            document.getElementById('history-list').style.display = 'none';
-        })
-
-        document.getElementById('history').addEventListener('click', function () {
-            document.getElementById('history').classList.add('active')
-            document.getElementById('upcoming').classList.remove('active')
-
-            document.getElementById('history-list').style.display = 'flex';
-            document.getElementById('upcoming-list').style.display = 'none';
-        })
-
         const upcomingList = document.getElementById('upcoming-list');
         const historyList = document.getElementById('history-list');
+        const user = JSON.parse(localStorage.getItem('user'));
 
-        const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-
-        const today = new Date(); // Ngày hiện tại (ngày hệ thống)
-
-        function parseTicketDate(dateStr) {
-            return new Date(dateStr);
+        // Kiểm tra nếu user không tồn tại
+        if (!user || !user.email) {
+            alert('Please log in to view your tickets!');
+            window.location.href = '/login';
+            throw new Error('No user data');
         }
 
-        tickets.forEach(ticket => {
-            const ticketDate = parseTicketDate(ticket.date);
+        console.log('User email:', user.email);
 
-            const ticketHTML = `
-                <div class="item">
-                    <div class="date">
-                        <div class="text">Date</div>
-                        <p>${ticket.date}</p>
-                    </div>
-                    <div class="title">
-                        <div class="text">Movie Title</div>
-                        <p>${ticket.movie}</p>
-                    </div>
-                    <div class="ticket-time">
-                        <div class="ticket">
-                            <div class="text">Ticket (<span class="quantity">${ticket.seats.split(',').length}</span>)</div>
-                            <p>${ticket.seats}</p>
-                        </div>
-                        <div class="time">
-                            <div class="text">Hours</div>
-                            <p>${ticket.time}</p>
-                        </div>
-                    </div>
-                    <div class="download">Download Ticket</div>
-                </div>
-            `;
-
-            // So sánh ngày
-            if (ticketDate < today.setHours(0, 0, 0, 0)) {
-                historyList.innerHTML += ticketHTML;
-            } else {
-                upcomingList.innerHTML += ticketHTML;
+        // Lấy danh sách vé từ API với email làm tham số
+        fetch(`/api/tickets/${user.email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(tickets => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Đặt về đầu ngày
+
+            function parseTicketDate(dateStr) {
+                // Giả định dateStr là "Fri, 2 December 2025", phân tích thủ công
+                const [dayName, day, month, year] = dateStr.split(/,\s|\s/);
+                return new Date(`${year}-${new Date(Date.parse(month + " 1, " + year)).getMonth() + 1}-${day.padStart(2, '0')}`);
+            }
+
+            if (!tickets || tickets.error) {
+                alert(tickets.message || 'No tickets found.');
+                return;
+            }
+
+            tickets.forEach(ticket => {
+                const ticketDate = parseTicketDate(ticket.date);
+
+                const ticketHTML = `
+                    <div class="item">
+                        <div class="date">
+                            <div class="text">Date</div>
+                            <p>${ticket.date}</p>
+                        </div>
+                        <div class="title">
+                            <div class="text">Movie Title</div>
+                            <p>${ticket.movie_title}</p>
+                        </div>
+                        <div class="ticket-time">
+                            <div class="ticket">
+                                <div class="text">Ticket (<span class="quantity">${ticket.ticket_seats.split(',').length}</span>)</div>
+                                <p>${ticket.ticket_seats}</p>
+                            </div>
+                            <div class="time">
+                                <div class="text">Hours</div>
+                                <p>${calculateSecondToHours(ticket.hours)}</p>
+                            </div>
+                        </div>
+                        <div class="download">Download Ticket</div>
+                    </div>
+                `;
+
+                // So sánh ngày
+                if (ticketDate < today) {
+                    historyList.innerHTML += ticketHTML;
+                } else {
+                    upcomingList.innerHTML += ticketHTML;
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching tickets:', error);
+            alert('Failed to load tickets. Please try again later.');
+        });
+
+        function calculateSecondToHours(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours}:${minutes}`;
+        }
+        // Xử lý chuyển đổi tab
+        document.getElementById('upcoming').addEventListener('click', function () {
+            document.getElementById('upcoming').classList.add('active');
+            document.getElementById('history').classList.remove('active');
+            document.getElementById('upcoming-list').style.display = 'flex';
+            document.getElementById('history-list').style.display = 'none';
+        });
+
+        document.getElementById('history').addEventListener('click', function () {
+            document.getElementById('history').classList.add('active');
+            document.getElementById('upcoming').classList.remove('active');
+            document.getElementById('history-list').style.display = 'flex';
+            document.getElementById('upcoming-list').style.display = 'none';
         });
     </script>
 </body>

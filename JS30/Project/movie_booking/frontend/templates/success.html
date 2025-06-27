@@ -8,7 +8,6 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <link rel="stylesheet" href="../style/success.css">
     <title>Movie Ticket Booking</title>
 </head>
@@ -31,21 +30,36 @@
     </div>
 
     <script>
+        // Lấy thông tin vé từ localStorage
         const ticketItem = JSON.parse(localStorage.getItem('bookingDetails'));
+        const user = JSON.parse(localStorage.getItem('user'));
 
+        // Tạo đối tượng vé mới
         const newTicket = {
-            id: Date.now(), // dùng làm khóa duy nhất
             date: ticketItem.date,
-            movie: ticketItem.movie,
-            seats: ticketItem.seats,
-            time: ticketItem.time
+            movie_title: ticketItem.movie,
+            ticket_seats: ticketItem.seats,
+            hours: ticketItem.time,
+            email: user.email 
         };
 
-        //Thêm vé mới vào LocalStorage
-        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
-        tickets.push(newTicket);
-        localStorage.setItem('tickets', JSON.stringify(tickets));
+        // Gửi dữ liệu đến API để thêm vào cơ sở dữ liệu
+        fetch('/api/tickets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newTicket)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Ticket saved successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error saving ticket:', error);a
+        });
 
+        // Xử lý sự kiện nút
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', () => {
                 if (button.classList.contains('view')) {

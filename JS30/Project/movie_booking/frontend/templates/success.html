@@ -43,6 +43,8 @@
             email: user.email 
         };
 
+        console.log(newTicket)
+
         // Gửi dữ liệu đến API để thêm vào cơ sở dữ liệu
         fetch('/api/tickets', {
             method: 'POST',
@@ -56,7 +58,7 @@
             console.log('Ticket saved successfully:', data);
         })
         .catch(error => {
-            console.error('Error saving ticket:', error);a
+            console.error('Error saving ticket:', error);
         });
 
         // Xử lý sự kiện nút

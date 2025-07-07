@@ -33,7 +33,10 @@
         <!-- Theater Table -->
         <div class="table-container">
             <h3>Theater</h3>
-            <table>
+
+            <input type="text" id="searchInput" placeholder="Search theater by name..." class="search-bar" />
+
+            <table id="theaterTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -43,85 +46,137 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>KL</td>
-                        <td>Status</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Bukit Bintang</td>
-                        <td>Status</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Shah Alam</td>
-                        <td>Status</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
 
-        <!-- Seats Table -->
-        <div class="table-container">
-            <h3>Seats</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Seats</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>KL</td>
-                        <td>Type</td>
-                        <td>Seats</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Bukit Bintang</td>
-                        <td>Type</td>
-                        <td>Seats</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Shah Alam</td>
-                        <td>Type</td>
-                        <td>Seats</td>
-                        <td>
-                            <i class="fas fa-eye action-btn"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Modal -->
+        <div id="theaterModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Theater Details</h2>
+                <form id="modal-form">
+                    <label>ID:</label>
+                    <input type="text" id="modal-id" readonly><br>
+
+                    <label>Name:</label>
+                    <input type="text" id="modal-name"><br>
+
+                    <label>Address:</label>
+                    <input type="text" id="modal-address"><br>
+
+                    <label>City:</label>
+                    <input type="text" id="modal-city"><br>
+
+                    <label>Status:</label>
+                    <select id="modal-status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select><br>
+
+                    <label>Seat Counts:</label>
+                    <input type="number" id="modal-seats"><br>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="save-btn">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <script>
-        document.querySelectorAll('.action-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Action button clicked!');
+        async function loadTheaters() {
+            const response = await fetch('/api/theaters');
+            const theaters = await response.json();
+            const tbody = document.querySelector('#theaterTable tbody');
+            tbody.innerHTML = ""; // Clear old data
+
+            theaters.forEach((theater, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${theater.name}</td>
+                    <td>${theater.status}</td>
+                    <td>
+                        <i class="fas fa-eye action-btn"
+                            data-id="${theater.theater_id}"
+                            data-name="${theater.name}"
+                            data-address="${theater.address}"
+                            data-city="${theater.city}"
+                            data-status="${theater.status}"
+                            data-seats="${theater.seat_count}">
+                        </i>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Gắn sự kiện mở modal khi click 👁️
+            document.querySelectorAll('.action-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    document.getElementById('modal-id').value = this.dataset.id;
+                    document.getElementById('modal-name').value = this.dataset.name;
+                    document.getElementById('modal-address').value = this.dataset.address;
+                    document.getElementById('modal-city').value = this.dataset.city;
+                    document.getElementById('modal-status').value = this.dataset.status;
+                    document.getElementById('modal-seats').value = this.dataset.seats;
+                    document.getElementById('theaterModal').style.display = 'flex';
+                });
+            });
+        }
+
+        // Đóng modal
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.close-btn').addEventListener('click', () => {
+                document.getElementById('theaterModal').style.display = 'none';
+            });
+
+            document.querySelector('.cancel-btn').addEventListener('click', () => {
+                document.getElementById('theaterModal').style.display = 'none';
+            });
+
+            // Gửi PUT khi Save
+            document.getElementById('modal-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const id = document.getElementById('modal-id').value;
+                const data = {
+                    name: document.getElementById('modal-name').value,
+                    address: document.getElementById('modal-address').value,
+                    city: document.getElementById('modal-city').value,
+                    status: document.getElementById('modal-status').value,
+                    seat_count: parseInt(document.getElementById('modal-seats').value)
+                };
+
+                const res = await fetch(`/api/theaters/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    document.getElementById('theaterModal').style.display = 'none';
+                    loadTheaters();
+                } else {
+                    alert('Update failed');
+                }
+            });
+
+            // Tìm kiếm
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const keyword = this.value.toLowerCase();
+                document.querySelectorAll("#theaterTable tbody tr").forEach(row => {
+                    const name = row.children[1].textContent.toLowerCase();
+                    row.style.display = name.includes(keyword) ? "" : "none";
+                });
             });
         });
+
+        // Tải dữ liệu
+        window.onload = loadTheaters;
     </script>
 </body>
 </html>

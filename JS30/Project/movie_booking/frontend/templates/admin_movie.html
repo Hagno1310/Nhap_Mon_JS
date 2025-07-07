@@ -32,7 +32,11 @@
 
         <!-- Movie Table -->
         <div class="table-container">
-            <table>
+            <h3>Search</h3>
+
+            <input type="text" id="searchInput" placeholder="Search theater by name..." class="search-bar" />
+
+            <table id="movieTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -53,7 +57,27 @@
                             <i class="fas fa-trash action-btn"></i>
                         </td>
                     </tr>
-                    <!-- Thêm các dòng khác nếu cần -->
+                    
+                    
+                    <!-- Modal View Movie -->
+                    <div id="movieModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close-btn">&times;</span>
+                            <h2>Movie Details</h2>
+                            <form>
+                                <label>Title:</label>
+                                <input type="text" id="view-title" readonly><br>
+                                <label>Description:</label>
+                                <textarea id="view-description" readonly></textarea><br>
+                                <label>Duration:</label>
+                                <input type="text" id="view-duration" readonly><br>
+                                <label>Genre:</label>
+                                <input type="text" id="view-genre" readonly><br>
+                                <label>Image URL:</label>
+                                <input type="text" id="view-image" readonly><br>
+                            </form>
+                        </div>
+                    </div>
                 </tbody>
             </table>
         </div>
@@ -105,18 +129,18 @@
             const action = event.target.dataset.action;
 
             if (action === 'view') {
-                try {
+                 try {
                     const response = await fetch(`/api/movies/${movieId}`);
                     const movie = await response.json();
-                    
+
                     if (response.ok) {
-                        // Create a simple modal or alert to show movie details
-                        alert(`
-                            Title: ${movie.title}
-                            Description: ${movie.description}
-                            Duration: ${movie.duration_minutes} minutes
-                            Genre: ${movie.genre}
-                        `);
+                        // Hiển thị dữ liệu vào modal
+                        document.getElementById('view-title').value = movie.title;
+                        document.getElementById('view-description').value = movie.description;
+                        document.getElementById('view-duration').value = movie.duration_minutes + " minutes";
+                        document.getElementById('view-genre').value = movie.genre;
+                        document.getElementById('view-image').value = movie.image_url;
+                        document.getElementById('movieModal').style.display = 'flex';
                     } else {
                         alert('Movie not found');
                     }
@@ -254,6 +278,20 @@
                 document.body.removeChild(modal);
             });
         });
+
+        // Đóng modal view
+        document.querySelector('#movieModal .close-btn').addEventListener('click', () => {
+            document.getElementById('movieModal').style.display = 'none';
+        });
+
+        // Tìm kiếm
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const keyword = this.value.toLowerCase();
+                document.querySelectorAll("#movieTable tbody tr").forEach(row => {
+                    const name = row.children[2].textContent.toLowerCase();
+                    row.style.display = name.includes(keyword) ? "" : "none";
+                });
+            });
 
         // Initial load of movies
         loadMovies();

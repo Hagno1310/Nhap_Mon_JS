@@ -158,6 +158,7 @@
             loadMovieAndTheaterData();
         };
 
+        //Fetch các API 
         function loadMovieAndTheaterData() {
             Promise.all([
                 fetch("/api/movies").then(res => res.json()),
@@ -171,15 +172,15 @@
                     }
 
                     document.querySelector(".banner-film").innerHTML = `
-          <div class="image-container">
-            <img src="${movie.image_url}" alt="" id="movie-image">
-          </div>
-          <div class="box">
-            <div class="name" id="movie-name">${movie.title}</div>
-            <p>${movie.description}</p>
-            <div class="duration">Duration <span>${durationToMinutes(movie.duration_minutes)}</span></div>
-            <div class="type">Type <span>${movie.genre}</span></div>
-          </div>`;
+                        <div class="image-container">
+                            <img src="${movie.image_url}" alt="" id="movie-image">
+                        </div>
+                        <div class="box">
+                            <div class="name" id="movie-name">${movie.title}</div>
+                            <p>${movie.description}</p>
+                            <div class="duration">Duration <span>${durationToMinutes(movie.duration_minutes)}</span></div>
+                            <div class="type">Type <span>${movie.genre}</span></div>
+                        </div>`;
 
                     updateTheatersList(theatersData);
                 })
@@ -189,29 +190,24 @@
                 });
         }
 
+        //Hàm thêm phim
         function updateTheatersList(theaters) {
             const container = document.querySelector("#theater .address");
-            container.innerHTML = theaters.map(theater =>
+
+            const activeTheaters = theaters.filter(theater => theater.status === "Active");
+            
+            container.innerHTML = activeTheaters.map(theater =>
                 `<li><i class="fa-solid fa-location-dot"></i>${theater.name}</li>`
             ).join("");
+
             setupTheaterListeners();
         }
 
+        //Hàm quy đổi dữ liệu phút sang định dạng _h-_m
         function durationToMinutes(duration) {
             const h = Math.floor(duration / 60);
             const m = duration % 60;
             return `${h}h ${m}m`;
-        }
-
-        function setupTheaterListeners() {
-            document.querySelectorAll("#theater li").forEach(item => {
-                item.addEventListener("click", function () {
-                    document.querySelectorAll("#theater li").forEach(e => e.classList.remove("active"));
-                    this.classList.add("active");
-                    document.getElementById("address-pick").textContent = this.textContent;
-                    isTheaterCheck = true;
-                });
-            });
         }
 
         const dayMap = {
@@ -229,6 +225,23 @@
             return [dayMap[day] || day, monthMap[month] || month, new Date().getFullYear()];
         }
 
+        let isTheaterCheck = false;
+        let isDateCheck = false;
+        let isTimeCheck = false;
+
+        //Active nút và cập nhật thông tin
+        function setupTheaterListeners() {
+            document.querySelectorAll("#theater li").forEach(item => {
+                item.addEventListener("click", function () {
+                    document.querySelectorAll("#theater li").forEach(e => e.classList.remove("active"));
+                    this.classList.add("active");
+                    document.getElementById("address-pick").textContent = this.textContent;
+                    isTheaterCheck = true;
+                });
+            });
+        }
+
+        //Hàm active nút 
         function setupPicker(containerId, pickId, callback) {
             document.querySelectorAll(`#${containerId} li`).forEach(item => {
                 item.addEventListener("click", function () {
@@ -238,7 +251,7 @@
                 });
             });
         }
-
+        
         setupPicker("date", "day-pick", el => {
             const [day, monthAbbr] = el.querySelector(".month").textContent.trim().split(" ");
             const dayName = el.querySelector(".day").textContent.trim();
@@ -252,11 +265,7 @@
             isTimeCheck = true;
         });
 
-        let isTheaterCheck = false;
-        let isDateCheck = false;
-        let isTimeCheck = false;
-
-        // ✅ BẤM PROCEED → CHUYỂN TRANG & XÓA PARAM
+        // Xóa Param khi bấm Proceed
         document.getElementById("btn").addEventListener("click", function () {
             if (isTheaterCheck && isDateCheck && isTimeCheck) {
                 const theater = document.getElementById("address-pick").textContent;
@@ -264,7 +273,7 @@
                 const time = document.getElementById("time-pick").textContent;
                 const url = `seat?theater=${encodeURIComponent(theater)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&movie=${encodeURIComponent(movieName)}&image=${encodeURIComponent(movieImage)}`;
 
-                // ✅ Clear param trước khi chuyển trang
+                // Xóa param trước khi chuyển trang
                 const cleanURL = window.location.origin + window.location.pathname;
                 window.history.replaceState({}, document.title, cleanURL);
 
@@ -274,7 +283,7 @@
             }
         });
 
-        // ✅ CLICK LOGO → VỀ HOME & CLEAR PARAM
+        // Xóa Param khi bấm Logo
         document.querySelector(".logo-container a").addEventListener("click", function (e) {
             e.preventDefault();
             const cleanURL = window.location.origin + "/home";
@@ -282,6 +291,7 @@
             window.location.href = cleanURL;
         });
 
+        // Xóa Param khi bấm Logout
         document.querySelector(".logout-btn").addEventListener("click", function (e) {
             e.preventDefault();
             const cleanURL = window.location.origin + "/";

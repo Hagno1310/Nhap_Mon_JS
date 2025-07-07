@@ -16,53 +16,107 @@
 <body>
     <div class="otp-container">
         <h2>Enter Otp</h2>
-        <div class="otp-inputs" id="otp-inputs">
+        <div class="otp-inputs hidden" id="otp-inputs"> 
             <input type="number" maxlength="1">
             <input type="number" maxlength="1">
             <input type="number" maxlength="1">
             <input type="number" maxlength="1">
         </div>
-        <button class="submit-btn" id="submit-btn">Submit</button>
+        <div class="btn-place">
+            <button class="request-otp-btn submit-btn" id="request-otp-btn">Gửi OTP</button> 
+            <button class="submit-btn" id="submit-btn">Submit</button>
+        </div>
     </div>
 
     <script>
         const inputs = document.querySelectorAll('#otp-inputs input');
+        const submitBtn = document.getElementById('submit-btn');
 
+        // Biến toàn cục để lưu trữ OTP ngẫu nhiên
+        let generatedOtp = '';
+
+        // --- Hàm tạo OTP ngẫu nhiên 4 chữ số ---
+        function generateRandomOtp() {
+            return Math.floor(1000 + Math.random() * 9000).toString(); // Đảm bảo 4 chữ số
+        }
+
+        // --- Logic xử lý input OTP ---
         inputs.forEach((input, index) => {
+            // Ngăn người dùng nhập quá 1 ký tự
             input.addEventListener('input', function (e) {
-                // Chỉ cho phép nhập số
-                this.value = this.value.replace(/[^0-9]/g, '');
+                // Chỉ cho phép nhập số và cắt bỏ ký tự thứ 2 trở đi nếu có
+                this.value = this.value.replace(/[^0-9]/g, '').substring(0, 1);
 
-                if (this.value.length === 1 && index < inputs.length - 1) {
-                    // Chuyển focus sang ô tiếp theo
-                    inputs[index + 1].focus();
-                }
-
-                if (this.value.length === 1 && index === inputs.length - 1) {
-                    // Nếu là ô cuối cùng, bỏ focus
-                    this.blur();
+                if (this.value.length === 1) {
+                    // Chuyển focus sang ô tiếp theo nếu không phải ô cuối cùng
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    } else {
+                        // Nếu là ô cuối cùng, bỏ focus và kiểm tra xem đã đủ OTP chưa
+                        this.blur();
+                    }
                 }
             });
 
             input.addEventListener('keydown', function (e) {
-                // Cho phép xóa (Backspace) và chuyển sang ô trước
+                // Xử lý phím Backspace để xóa và chuyển focus về ô trước
                 if (e.key === 'Backspace' && this.value === '' && index > 0) {
                     inputs[index - 1].focus();
                 }
             });
+
+            // Xử lý khi dán OTP vào ô đầu tiên
+            input.addEventListener('paste', function(e) {
+                e.preventDefault(); // Ngăn hành vi dán mặc định
+                const pasteData = e.clipboardData.getData('Text');
+                if (pasteData.length === inputs.length && /^\d+$/.test(pasteData)) {
+                    // Nếu dữ liệu dán có đúng độ dài và chỉ chứa số
+                    pasteData.split('').forEach((char, i) => {
+                        if (inputs[i]) {
+                            inputs[i].value = char;
+                        }
+                    });
+                    inputs[inputs.length - 1].focus(); // Chuyển focus đến ô cuối cùng
+                    inputs[inputs.length - 1].blur(); // Bỏ focus sau khi dán
+                } else if (pasteData.length > 0 && /^\d+$/.test(pasteData)) {
+                    // Nếu dán nhiều hơn 1 ký tự vào 1 ô, chỉ lấy ký tự đầu tiên
+                    this.value = pasteData.charAt(0);
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
         });
 
-        document.getElementById('submit-btn').addEventListener('click', function () {
-            const otp = Array.from(inputs).map(input => input.value).join('');
-            if (otp.length === inputs.length) {
-                // Gửi OTP đến server hoặc xử lý tiếp theo
-                console.log('OTP submitted:', otp);
-                // Cuyển hướng đến trang thành công
-                window.location.href = './success';
+        // --- Xử lý nút Submit ---
+        submitBtn.addEventListener('click', function () {
+            const enteredOtp = Array.from(inputs).map(input => input.value).join('');
+
+            if (enteredOtp.length === inputs.length) {
+                console.log('OTP submitted:', enteredOtp);
+
+                // Kiểm tra OTP đã nhập với OTP ngẫu nhiên
+                if (enteredOtp === generatedOtp) {
+                    // Chuyển hướng đến trang thành công
+                    window.location.href = './success';
+                } else {
+                    alert('OTP không đúng. Vui lòng thử lại.');
+                    // Xóa các input để người dùng nhập lại
+                    inputs.forEach(input => input.value = '');
+                    inputs[0].focus(); // Chuyển focus về ô đầu tiên
+                }
             } else {
-                alert('Please enter a valid OTP');
+                alert('Vui lòng nhập đủ 4 chữ số của OTP.');
             }
         });
+
+        // --- Khi bấm nút, tạo OTP và hiển thị cảnh báo ---
+        document.querySelector('.request-otp-btn').addEventListener('click', function() {
+            generatedOtp = generateRandomOtp();
+            alert(`OTP của bạn là: ${generatedOtp}`);
+            inputs[0].focus(); // Tự động focus vào ô nhập đầu tiên
+        });
+
     </script>
 </body>
 </html>

@@ -163,6 +163,56 @@ def get_theaters(request: Request):
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
     
+@app.post("/api/theaters", response_class=JSONResponse)
+async def create_theaters(request: Request):
+    try:
+        data = await request.json()
+        name = data["name"]
+        address = data["address"]
+        city = data["city"]
+        status = data["status"]
+        seat_count = data["seat_count"]
+
+        cursor = db.cursor()
+        query = """
+            INSERT INTO theaters (name, address, city, status, seat_count) 
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        values = (name, address, city, status, seat_count)
+        cursor.execute(query, values)
+        db.commit()
+        cursor.close()
+
+        return {"message": "Theater created successfully"}
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500) 
+
+@app.put("/api/theaters/{theater_id}", response_class=JSONResponse)
+async def update_theater(theater_id: int, request: Request):
+    try:
+        data = await request.json()
+
+        cursor = db.cursor()
+        cursor.execute("""
+            UPDATE theaters
+            SET name = %s, address = %s, city = %s, status = %s, seat_count = %s
+            WHERE theater_id = %s
+        """, (
+            data["name"],
+            data["address"],
+            data["city"],
+            data["status"],
+            data["seat_count"],
+            theater_id
+        ))
+
+        db.commit()
+        cursor.close()
+        return {"message": "Theater updated successfully"}
+
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+    
 @app.get("/api/showtimes", response_class=JSONResponse)
 def get_showtimes(request: Request):
     try:

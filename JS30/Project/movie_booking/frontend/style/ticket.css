@@ -79,6 +79,13 @@ header {
     justify-content: space-between;
 }
 
+.ticket-time .ticket {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
 .download {
     width: 100%;
     height: 50px;

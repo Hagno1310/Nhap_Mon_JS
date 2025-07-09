@@ -44,6 +44,10 @@ def admin_movie_page(request: Request):
 def admin_movie_page(request: Request):
     return templates.TemplateResponse("admin_theater.html", {"request": request})
 
+@app.get("/admin_user", response_class=HTMLResponse)
+def admin_user_page(request: Request):
+    return templates.TemplateResponse("admin_user.html", {"request": request})
+
 @app.get("/info", response_class=HTMLResponse)
 def info_page(request: Request):
     return templates.TemplateResponse("info.html", {"request": request})
@@ -82,6 +86,27 @@ def get_accounts():
         return data
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
+    
+@app.get("/api/users-with-ticket")
+def get_users_with_ticket():
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT 
+                ac.id,
+                ac.email,
+                ac.created_at,
+                COUNT(tk.ticket_id) AS total_ticket
+            FROM accounts ac
+            LEFT JOIN ticket tk ON tk.email = ac.email
+            WHERE ac.role = 'user'
+            GROUP BY ac.id, ac.email, ac.created_at
+            ORDER BY ac.created_at DESC;
+        """)
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.post("/api/account", response_class=JSONResponse)
 def post_account(data: dict = Body(...)):
@@ -213,17 +238,15 @@ async def update_theater(theater_id: int, request: Request):
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
     
-@app.get("/api/showtimes", response_class=JSONResponse)
-def get_showtimes(request: Request):
+@app.delete("/api/theaters/{theater_id}")
+def delete_theater(theater_id: int):
     try:
-        cursor = db.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM showtimes")
-        data = cursor.fetchall()
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM theaters WHERE theater_id = %s", (theater_id,))
         db.commit()
-        cursor.close()
-        return data
+        return {"message": "Deleted successfully"}
     except Exception as e:
-        return JSONResponse({"error": str(e)}, status_code=500)
+        return JSONResponse(status_code=500, content={"error": str(e)})
     
 @app.get("/api/tickets", response_class=JSONResponse)
 def get_tickets(request: Request):
@@ -255,10 +278,10 @@ def post_ticket(data: dict = Body(...)):
     try:
         cursor = db.cursor()
         query = """
-            INSERT INTO ticket (date, movie_title, ticket_seats, hours, email)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO ticket (date, movie_title, ticket_seats, hours, email, total, theater_name)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
-        values = (data["date"], data["movie_title"], data["ticket_seats"], data["hours"], data["email"])
+        values = (data["date"], data["movie_title"], data["ticket_seats"], data["hours"], data["email"], data["total"], data["theater"])
         cursor.execute(query, values)
         db.commit()
         cursor.close()

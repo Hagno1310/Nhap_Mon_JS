@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Theater</title>
+    <link rel="stylesheet" href="/style/admin_user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Theater</h2>
+        <ul>
+            <a href="/admin_movie"><li>Movies</li></a>
+            <a href="/admin_theater"><li>Theaters</li></a>
+            <li class="active">Users</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="user-info">
+                <span class="avatar">a</span>
+                <span>Administrator</span>
+            </div>
+        </div>
+
+        <!-- User Table -->
+        <div class="table-container">
+            <h3>User</h3>
+
+            <input type="text" id="searchInput" placeholder="Search user by email..." class="search-bar"/>
+
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>Create At</th>
+                        <th>Total Ticket</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script>
+        async function loadUsers() {
+            const response = await fetch('/api/users-with-ticket');
+            const accounts = await response.json();
+            const tbody = document.querySelector('#userTable tbody');
+            tbody.innerHTML = ""; // Xóa dữ liệu cũ
+
+            accounts.forEach((account, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${account.email}</td>
+                    <td>${calculateTime(account.created_at) || '-'}</td>
+                    <td>${account.total_ticket || 0}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+            const keyword = this.value.toLowerCase();
+            document.querySelectorAll("#userTable tbody tr").forEach(row => {
+                const email = row.children[1].textContent.toLowerCase();
+                row.style.display = email.includes(keyword) ? "" : "none";
+            });
+        });
+
+        function calculateTime(createdAt) {
+            const now = new Date();
+            const createdDate = new Date(createdAt);
+            const diffMs = now - createdDate;
+
+            const seconds = Math.floor(diffMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours   = Math.floor(minutes / 60);
+            const days    = Math.floor(hours / 24);
+
+            if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+            if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+            return `Just now`;
+        }
+
+        // Gọi khi trang load
+        window.onload = loadUsers;
+    </script>
+</body>
+</html>

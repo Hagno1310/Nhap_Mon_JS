@@ -14,9 +14,7 @@
         <ul>
             <li class="active">Movies</li>
             <a href="/admin_theater"><li>Theaters</li></a>
-            <li>Users</li>
-            <li>Orders</li>
-            <li>Report</li>
+            <a href="/admin_user"><li>Users</li></a>
         </ul>
     </div>
 
@@ -25,7 +23,7 @@
         <div class="header">    
             <div class="user-info">
                 <span class="avatar">a</span>
-                <span>administrator</span>
+                <span>Administrator</span>
             </div>
             <button class="create-btn">+ Create new</button>
         </div>
@@ -178,6 +176,7 @@
             modal.innerHTML = `
                 <div class="modal-content">
                     <h2>Add New Movie</h2>
+                    <span class="close-btn">&times;</span>
                     <form id="create-movie-form">
                         <input type="text" id="title" placeholder="Title" required>
                         <textarea id="description" placeholder="Description" required></textarea>
@@ -271,6 +270,10 @@
                     console.error('Error creating movie:', error);
                     alert('Failed to create movie');
                 }
+            });
+
+            modal.querySelector(".close-btn").addEventListener('click', () => {
+                document.body.removeChild(modal);
             });
 
             // Handle cancel button

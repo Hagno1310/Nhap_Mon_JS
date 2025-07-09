@@ -251,6 +251,34 @@ table td img {
   background-color: #fff;
 }
 
+.modal-content .save-btn,
+.modal-content .cancel-btn {
+  padding: 8px 14px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.modal-content .save-btn {
+  background-color: #34a853;
+  color: #fff;
+}
+
+.modal-content .save-btn:hover {
+  background-color: #2e8b45;
+}
+
+.modal-content .cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-content .cancel-btn:hover {
+  background-color: #bbb;
+}
+
 select {
     width: 100%;
     padding: 8px 10px;
@@ -274,22 +302,4 @@ option {
     background-color: white;
     color: #333;
     font-size: 14px;
-}
-
-.modal-content button[type="submit"] {
-    background: #4CAF50;
-    color: white;
-}
-
-.modal-content .cancel-btn {
-    background: #f44336;
-    color: white;
-}
-
-.modal-content button {
-    padding: 8px 16px;
-    margin: 10px 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }

@@ -36,11 +36,13 @@
 
         // Tạo đối tượng vé mới
         const newTicket = {
+            theater: ticketItem.theater,
             date: ticketItem.date,
             movie_title: ticketItem.movie,
             ticket_seats: ticketItem.seats,
             hours: ticketItem.time,
-            email: user.email 
+            email: user.email,
+            total: ticketItem.total
         };
 
         console.log(newTicket)

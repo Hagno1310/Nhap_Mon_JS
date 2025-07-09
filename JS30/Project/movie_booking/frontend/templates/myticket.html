@@ -93,6 +93,16 @@
                             <div class="text">Movie Title</div>
                             <p>${ticket.movie_title}</p>
                         </div>
+                        <div class="theater-total">
+                            <div class="theater">
+                                <div class="text">Theater</div>
+                                <p>${ticket.theater_name}</p>
+                            </div>
+                            <div class="total">
+                                <div class="text">Total</div>
+                                <p>${ticket.total}</p>
+                            </div>
+                        </div>
                         <div class="ticket-time">
                             <div class="ticket">
                                 <div class="text">Ticket (<span class="quantity">${ticket.ticket_seats.split(',').length}</span>)</div>

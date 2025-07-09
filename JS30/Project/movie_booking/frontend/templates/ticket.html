@@ -33,6 +33,16 @@
                 <div class="text">Movie Title</div>
                 <p></p>
             </div>
+            <div class="theater-total">
+                <div class="theater">
+                    <div class="text">Theater</div>
+                    <p></p>
+                </div>
+                <div class="total">
+                    <div class="text">Total</div>
+                    <p></p>
+                </div>
+            </div>
             <div class="ticket-time">
                 <div class="ticket">
                     <div class="text">Ticket (<span class="quantity">0</span>)</div>
@@ -55,6 +65,8 @@
 
         document.querySelector('.date p').textContent = ticketItem.date;
         document.querySelector('.title p').textContent = ticketItem.movie;
+        document.querySelector('.theater-total .theater p').textContent = ticketItem.theater;
+        document.querySelector('.theater-total .total p').textContent = ticketItem.total;
         document.querySelector('.ticket-time .ticket p').textContent = ticketItem.seats;
         document.querySelector('.ticket-time .time p').textContent = ticketItem.time;
         document.querySelector('.quantity').textContent = ticketItem.seats.split(',').length;

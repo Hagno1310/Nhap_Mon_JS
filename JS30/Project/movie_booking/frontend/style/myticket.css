@@ -139,9 +139,9 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 30px;
+    gap: 10px;
     color: #fff;
-    height: 408px;
+    height: 520px;
     border: 1px solid #fff;
     border-radius: 20px;
     padding: 24px;
@@ -166,10 +166,22 @@ header {
     font-size: 24px;
 }
 
+.theater-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .ticket-time {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.ticket-time .ticket {
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .download {

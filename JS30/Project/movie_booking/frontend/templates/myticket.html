@@ -70,7 +70,7 @@
             today.setHours(0, 0, 0, 0); // Đặt về đầu ngày
 
             function parseTicketDate(dateStr) {
-                // Giả định dateStr là "Fri, 2 December 2025", phân tích thủ công
+                // Tách chuỗi ngày theo định dạng "Day, DD Month YYYY"
                 const [dayName, day, month, year] = dateStr.split(/,\s|\s/);
                 return new Date(`${year}-${new Date(Date.parse(month + " 1, " + year)).getMonth() + 1}-${day.padStart(2, '0')}`);
             }
@@ -126,6 +126,7 @@
             });
         })
 
+        // Hàm chuyển đổi giây sang định dạng giờ:phút
         function calculateSecondToHours(seconds) {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);

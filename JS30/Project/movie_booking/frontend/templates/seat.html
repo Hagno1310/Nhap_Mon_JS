@@ -126,6 +126,7 @@
         const movie = urlParams.get('movie');
         const image = urlParams.get('image');
 
+        // Hiển thị thông tin trong footer
         document.getElementById('seats').querySelectorAll('.seat').forEach(e => {
             e.textContent = `${row[rowIndex]}${numberSeat}`
             indexCurrent++
@@ -135,6 +136,7 @@
                 indexCurrent = 1
                 rowIndex++
             }
+
             if (numberSeat == 11) {
                 numberSeat = 1
             }
@@ -146,9 +148,11 @@
 
                 if (e.classList.contains('active')) {
                     if (!selectedSeats.includes(seatLabel)) {
+                        // Thêm ghế vào danh sách đã chọn
                         selectedSeats.push(seatLabel);
                     }
                 } else {
+                    // Xóa ghế khỏi danh sách đã chọn
                     const index = selectedSeats.indexOf(seatLabel);
                     if (index !== -1) {
                         selectedSeats.splice(index, 1);

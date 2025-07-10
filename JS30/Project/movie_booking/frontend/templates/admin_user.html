@@ -68,6 +68,7 @@
             });
         }
 
+        // Tìm kiếm người dùng theo email
         document.getElementById("searchInput").addEventListener("input", function () {
             const keyword = this.value.toLowerCase();
             document.querySelectorAll("#userTable tbody tr").forEach(row => {
@@ -76,6 +77,7 @@
             });
         });
 
+        // Hàm tính toán thời gian đã tạo tài khoản
         function calculateTime(createdAt) {
             const now = new Date();
             const createdDate = new Date(createdAt);

@@ -29,7 +29,9 @@
         </header>
         <div class="list-film">
             <div class="title">now showing</div>
-            <div class="films-menu"></div>
+            <div class="films-menu">
+                <!-- Các mục phim sẽ được thêm vào đây thông qua JavaScript -->
+            </div>
         </div>
     </div>
     <script>
@@ -44,6 +46,7 @@
             }
         });
 
+        // Lấy danh sách phim từ API và hiển thị
         fetch('/api/movies')
             .then(response => response.json())
             .then(data => {

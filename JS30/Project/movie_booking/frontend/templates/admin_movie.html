@@ -86,16 +86,16 @@
         const tableBody = document.querySelector('tbody');
         const createBtn = document.querySelector('.create-btn');
 
-        // Fetch and display movies
+        // Tải dữ liệu phim từ API
         async function loadMovies() {
             try {
                 const response = await fetch('/api/movies');
                 const movies = await response.json();
                 
-                // Clear existing table content
+                // Xóa phần thân bảng cũ
                 tableBody.innerHTML = '';
 
-                // Populate table with movie data
+                // Thêm dữ liệu phim vào bảng
                 movies.forEach((movie, index) => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -111,7 +111,7 @@
                     tableBody.appendChild(row);
                 });
 
-                // Add event listeners for action buttons
+                // Thêm sự kiện click cho các nút hành động
                 document.querySelectorAll('.action-btn').forEach(btn => {
                     btn.addEventListener('click', handleAction);
                 });
@@ -121,7 +121,7 @@
             }
         }
 
-        // Handle view and delete actions
+        // Xử lý sự kiện click cho các nút hành động
         async function handleAction(event) {
             const movieId = event.target.dataset.id;
             const action = event.target.dataset.action;
@@ -156,7 +156,7 @@
                         
                         if (response.ok) {
                             alert(result.message);
-                            loadMovies(); // Refresh the table
+                            loadMovies(); // Tải lại dữ liệu sau khi xóa
                         } else {
                             alert(result.error);
                         }
@@ -168,9 +168,9 @@
             }
         }
 
-        // Handle create new movie
+        // Tạo nút thêm mới
         createBtn.addEventListener('click', () => {
-            // Create a simple form in a modal
+            // Tạo modal để thêm mới phim
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.innerHTML = `
@@ -190,7 +190,7 @@
             `;
             document.body.appendChild(modal);
 
-            // Add styles for modal
+            // Thêm style cho modal
             const style = document.createElement('style');
             style.textContent = `
                 .modal {
@@ -237,7 +237,7 @@
             `;
             document.head.appendChild(style);
 
-            // Handle form submission
+            // Xử lý sự kiện submit của form
             const form = modal.querySelector('#create-movie-form');
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -262,7 +262,7 @@
                     if (response.ok) {
                         alert(result.message);
                         document.body.removeChild(modal);
-                        loadMovies(); // Refresh the table
+                        loadMovies(); // Tải lại dữ liệu sau khi thêm mới
                     } else {
                         alert(result.error);
                     }
@@ -276,7 +276,7 @@
                 document.body.removeChild(modal);
             });
 
-            // Handle cancel button
+            // Xử lý sự kiện click cho nút hủy
             modal.querySelector('.cancel-btn').addEventListener('click', () => {
                 document.body.removeChild(modal);
             });
@@ -296,7 +296,7 @@
                 });
             });
 
-        // Initial load of movies
+        // Gọi hàm loadMovies khi trang được tải
         loadMovies();
     });
     </script>
